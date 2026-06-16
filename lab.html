@@ -124,7 +124,23 @@
   .checkbtn{margin-top:9px;padding:9px 16px;background:var(--accent);color:#000;border-radius:999px;font-weight:800;font-size:13px}
   .checkbtn.ghost{background:var(--tag-bg);color:var(--text-primary)}
   .shortans-btn{margin-top:2px;padding:11px;width:100%;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent);border-radius:8px;font-weight:800;font-size:13.5px}
-  .explanation{margin-top:13px;padding:14px 16px;background:var(--explanation-bg);border-radius:8px;border-left:3px solid var(--accent);font-size:13.5px;line-height:1.62;color:var(--text-primary);white-space:pre-wrap}
+  .explanation{margin-top:13px;padding:14px 16px;background:var(--explanation-bg);border-radius:8px;border-left:3px solid var(--accent);font-size:13.5px;line-height:1.62;color:var(--text-primary)}
+  .explanation .md-p{margin:2px 0}
+  .explanation .md-h{font-weight:800;font-size:14px;margin:12px 0 5px;color:var(--accent)}
+  .explanation .md-sp{height:8px}
+  .explanation .md-u{margin:4px 0 6px;padding-left:20px}
+  .explanation .md-u li{margin:2.5px 0}
+  .explanation code{background:var(--tag-bg);padding:1px 5px;border-radius:4px;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:var(--text-primary)}
+  .explanation table.md-t{border-collapse:collapse;width:100%;margin:9px 0;font-size:12.5px;display:block;overflow-x:auto}
+  .explanation table.md-t th,.explanation table.md-t td{border:1px solid var(--border);padding:6px 9px;text-align:left;vertical-align:top;white-space:normal}
+  .explanation table.md-t th{background:var(--tag-bg);font-weight:800;white-space:nowrap}
+  .explanation .md-p:first-child{margin-top:0}
+  .solo-prog{height:5px;background:var(--tag-bg);border-radius:999px;overflow:hidden;margin:6px 0 16px}
+  .solo-prog>div{height:100%;background:var(--accent);transition:width .3s}
+  .solo-nav{display:flex;gap:10px;justify-content:space-between;margin-top:18px;align-items:center}
+  .solo-btn{padding:11px 20px;background:var(--tag-bg);border-radius:999px;font-weight:800;font-size:14px;color:var(--text-primary)}
+  .solo-btn.primary{background:var(--accent);color:#000}
+  .solo-hint{font-size:11.5px;color:var(--text-subdued);text-align:center;margin-top:12px;font-weight:600}
   .verdict{font-weight:800;margin-bottom:7px;font-size:14px;display:flex;align-items:center;gap:7px}
   .verdict.correct{color:var(--accent)} .verdict.wrong{color:var(--wrong)}
   .explanation strong{font-weight:800}
@@ -185,6 +201,7 @@ const PARTORDER=['기초','소독멸균','마취채혈부검','보정투여계�
 const PARTLBL={'기초':'기초·종특성','소독멸균':'소독·멸균','마취채혈부검':'마취·채혈·부검','보정투여계산':'보정·투여·계산','유전모니터링':'유전 모니터링','품질검정':'품질검정','안락사':'안락사','장봉합':'장봉합'};
 const PARTCOL={'기초':'#ff6b6b','소독멸균':'#4fc3f7','마취채혈부검':'#c792ea','보정투여계산':'#ffb74d','유전모니터링':'#81c784','품질검정':'#5ca8ff','안락사':'#f47fb0','장봉합':'#a884ff'};
 const FILTERS=[
+  ['⚡ 족보 몰아풀기','#ffd54f',null],
   ['전체','#1DB954',q=>true],
   ['기초·종특성','#ff6b6b',q=>q.part==='기초'],
   ['소독·멸균','#4fc3f7',q=>q.part==='소독멸균'],
@@ -207,21 +224,51 @@ const FILTERS=[
 const NOSUM=q=>q.origin!=='summary';
 const LS='vetlabPracV1';
 let ST=load();
-function load(){try{const j=JSON.parse(localStorage.getItem(LS));if(j&&j.ans){if(!j.bookmarks)j.bookmarks={};return j;}}catch(e){}
-  return{ans:{},filter:0,theme:'dark',bookmarks:{}};}
+function load(){try{const j=JSON.parse(localStorage.getItem(LS));if(j&&j.ans){if(!j.bookmarks)j.bookmarks={};if(j.soloIdx==null)j.soloIdx=0;return j;}}catch(e){}
+  return{ans:{},filter:1,theme:'dark',bookmarks:{},soloIdx:0};}
+function isSolo(){return !FILTERS[ST.filter][2];}
+function soloList(){return QUESTIONS.filter(q=>q.origin==='jokbo'&&['ox','single','multi'].includes(q.type));}
 function save(){localStorage.setItem(LS,JSON.stringify(ST));}
 const TOTALQ=QUESTIONS.filter(q=>['ox','single','multi'].includes(q.type)).length;
 const QMAP={};QUESTIONS.forEach(q=>QMAP[q.id]=q);
 function applyTheme(){document.documentElement.setAttribute('data-theme',ST.theme);document.getElementById('themeBtn').textContent=ST.theme==='dark'?'🌙':'☀️';}
 function esc(s){return(s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function md(s){return esc(s).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/✓/g,'<span style="color:var(--accent);font-weight:800">✓</span>').replace(/✗/g,'<span style="color:var(--wrong);font-weight:800">✗</span>');}
+function inl(t){return t
+  .replace(/🔴\s*\*\*([^*]+)\*\*/g,'<b style="color:#ff6b6b">🔴$1</b>')
+  .replace(/🔵\s*\*\*([^*]+)\*\*/g,'<b style="color:#5ca8ff">🔵$1</b>')
+  .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
+  .replace(/`([^`]+)`/g,'<code>$1</code>')
+  .replace(/🔴/g,'<span style="color:#ff6b6b">🔴</span>')
+  .replace(/🔵/g,'<span style="color:#5ca8ff">🔵</span>')
+  .replace(/✓/g,'<span style="color:var(--accent);font-weight:800">✓</span>')
+  .replace(/✗/g,'<span style="color:var(--wrong);font-weight:800">✗</span>');}
+function md(s){
+  if(!s)return'';
+  const lines=esc(s).split('\n');let html='',i=0,inUl=false;
+  const flush=()=>{if(inUl){html+='</ul>';inUl=false;}};
+  while(i<lines.length){
+    const ln=lines[i];
+    if(/^\s*\|/.test(ln)&&i+1<lines.length&&/^\s*\|[\s:|-]+\|\s*$/.test(lines[i+1])){
+      flush();const head=ln.split('|').slice(1,-1).map(c=>c.trim());i+=2;const rows=[];
+      while(i<lines.length&&/^\s*\|/.test(lines[i])){rows.push(lines[i].split('|').slice(1,-1).map(c=>c.trim()));i++;}
+      html+='<table class="md-t"><thead><tr>'+head.map(h=>'<th>'+inl(h)+'</th>').join('')+'</tr></thead><tbody>'+
+        rows.map(r=>'<tr>'+r.map(c=>'<td>'+inl(c)+'</td>').join('')+'</tr>').join('')+'</tbody></table>';continue;}
+    const hm=ln.match(/^(#{2,4})\s+(.*)/);
+    if(hm){flush();html+='<div class="md-h">'+inl(hm[2])+'</div>';i++;continue;}
+    const bm=ln.match(/^\s*[-*]\s+(.*)/);
+    if(bm){if(!inUl){html+='<ul class="md-u">';inUl=true;}html+='<li>'+inl(bm[1])+'</li>';i++;continue;}
+    flush();
+    if(ln.trim()==='')html+='<div class="md-sp"></div>';else html+='<div class="md-p">'+inl(ln)+'</div>';
+    i++;
+  }
+  flush();return html;}
 function setEq(a,b){a=[...a].sort();b=[...b].sort();return a.length===b.length&&a.every((v,i)=>v===b[i]);}
 const TLBL={ox:'⭕ OX',short:'✍️ 단답',calc:'🧮 계산',essay:'📝 서술',single:'객관식',multi:'모두고르기'};
 
 function renderSidebar(){
   const nav=document.getElementById('filterNav');nav.innerHTML='';
   FILTERS.forEach((f,idx)=>{
-    const n=QUESTIONS.filter(f[2]).length;
+    const n=f[2]?QUESTIONS.filter(f[2]).length:soloList().length;
     const b=document.createElement('button');
     b.className='nav-item'+(ST.filter===idx?' active':'');
     b.innerHTML=`<span style="display:flex;align-items:center"><span class="nav-dot" style="background:${f[1]}"></span>${f[0]}</span><span class="count">${n}</span>`;
@@ -286,8 +333,24 @@ function cardHtml(q){
 function selfGrade(q,st){const s=st.self;
   return `<div class="selfgrade"><button class="sg o${s==='o'?' on':''}" onclick="grade(${q.id},'o')">⭕ 맞췄음</button><button class="sg x${s==='x'?' on':''}" onclick="grade(${q.id},'x')">❌ 틀렸음</button></div>`;}
 let curTerm='';
+function renderSolo(){
+  const list=soloList();const main=document.getElementById('main');
+  if(!list.length){main.innerHTML='<div class="empty-card">족보 문항 없음</div>';return;}
+  let idx=Math.min(ST.soloIdx||0,list.length-1);if(idx<0)idx=0;ST.soloIdx=idx;
+  const q=list[idx];const st=ST.ans[q.id]||{checked:false};const pct=Math.round((idx+1)/list.length*100);
+  let h=`<div class="topbar"><h1>⚡ 족보 몰아풀기 <span class="cnt">${idx+1} / ${list.length} · ${pct}%</span></h1></div>`;
+  h+=`<div class="solo-prog"><div style="width:${pct}%"></div></div>`;
+  h+=cardHtml(q);
+  h+=`<div class="solo-nav"><button class="solo-btn" onclick="soloMove(-1)">← 이전</button>`;
+  if(q.type==='multi'&&!st.checked)h+=`<button class="solo-btn primary" onclick="check(${q.id})">✓ 정답 확인</button>`;
+  h+=`<button class="solo-btn primary" onclick="soloMove(1)">다음 →</button></div>`;
+  h+=`<div class="solo-hint">⌨ 키보드: <b>1~5</b> 답 선택(OX는 1=O·2=X) · <b>← →</b> 이동 · 정답 맞히면 자동으로 다음</div>`;
+  main.innerHTML=h;main.scrollTop=0;
+}
+window.soloMove=function(d){const list=soloList();let idx=(ST.soloIdx||0)+d;idx=Math.max(0,Math.min(list.length-1,idx));ST.soloIdx=idx;save();renderSolo();};
 function render(){
   applyTheme();renderSidebar();
+  if(isSolo())return renderSolo();
   const f=FILTERS[ST.filter][2];
   let view=QUESTIONS.filter(f);
   if(curTerm){const t=curTerm.toLowerCase();view=view.filter(q=>((q.q||'')+(q.topic||'')+(q.explain||'')).toLowerCase().includes(t));}
@@ -320,9 +383,17 @@ let searchTimer=null;
 function onSearch(v){curTerm=v;clearTimeout(searchTimer);searchTimer=setTimeout(()=>{render();const el=document.getElementById('search');if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length);}},180);}
 window.pick=function(id,n){const q=QMAP[id];let st=ST.ans[id]||{selected:[],checked:false,correct:false};
   if(st.checked)return;
-  if(q.type==='single'||q.type==='ox'){st.selected=[n];st.checked=true;st.correct=setEq(st.selected,q.answer);}
-  else st.selected=st.selected.includes(n)?st.selected.filter(x=>x!==n):[...st.selected,n];
+  if(q.type==='single'||q.type==='ox'){st.selected=[n];st.checked=true;st.correct=setEq(st.selected,q.answer);
+    ST.ans[id]=st;save();render();if(isSolo())setTimeout(()=>soloMove(1),650);return;}
+  st.selected=st.selected.includes(n)?st.selected.filter(x=>x!==n):[...st.selected,n];
   ST.ans[id]=st;save();render();};
+document.addEventListener('keydown',e=>{
+  if(!isSolo())return;
+  if(/^[1-9]$/.test(e.key)){const list=soloList();const q=list[ST.soloIdx||0];
+    if(q){const st=ST.ans[q.id];if(!(st&&st.checked)){const n=+e.key;if(n<=(q.choices||[]).length){pick(q.id,n);e.preventDefault();}}}}
+  else if(e.key==='ArrowRight'){soloMove(1);e.preventDefault();}
+  else if(e.key==='ArrowLeft'){soloMove(-1);e.preventDefault();}
+});
 window.check=function(id){const q=QMAP[id];let st=ST.ans[id]||{selected:[],checked:false,correct:false};
   if(!st.selected||!st.selected.length){alert('선지를 선택하세요');return;}
   st.checked=true;st.correct=setEq(st.selected,q.answer);ST.ans[id]=st;save();render();};
