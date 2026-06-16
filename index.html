@@ -209,7 +209,8 @@ const PARTLBL={'0_감별종합':'감별·종합','1_바이러스':'바이러스'
 const PARTCOL={'0_감별종합':'#bdbdbd','1_바이러스':'#ff6b6b','2_세균':'#4fc3f7','3_곰팡이기생충':'#81c784','4_비감염':'#c792ea','5_원숭이BL모델':'#ffb74d'};
 const NOSUM=q=>q.origin!=='summary';
 const FILTERS=[
-  ['⚡ 족보 몰아풀기','#ffd54f',null],
+  ['⚡ 몰아풀기 ① 객관식','#ffd54f','MC'],
+  ['⚡ 몰아풀기 ② 주관식','#ffce54','SA'],
   ['전체','#1DB954',q=>true],
   ['감별·종합','#bdbdbd',q=>q.part==='0_감별종합'],
   ['바이러스','#ff6b6b',q=>q.part==='1_바이러스'],
@@ -230,9 +231,11 @@ const FILTERS=[
 const LS='vetlabQuizV2';
 let ST=load();
 function load(){try{const j=JSON.parse(localStorage.getItem(LS));if(j&&j.ans){if(!j.bookmarks)j.bookmarks={};if(j.soloIdx==null)j.soloIdx=0;return j;}}catch(e){}
-  return{ans:{},filter:1,theme:'dark',bookmarks:{},soloIdx:0};}
-function isSolo(){return !FILTERS[ST.filter][2];}
-function soloList(){return QUESTIONS.filter(q=>q.origin==='jokbo'&&['ox','single','multi'].includes(q.type));}
+  return{ans:{},filter:2,theme:'dark',bookmarks:{},soloIdx:0};}
+function isSolo(){return typeof FILTERS[ST.filter][2]==='string';}
+function soloMode(){return FILTERS[ST.filter][2];}
+function soloListFor(m){return QUESTIONS.filter(q=>q.origin==='jokbo'&&(m==='SA'?['short','calc','essay']:['ox','single','multi']).includes(q.type));}
+function soloList(){return soloListFor(soloMode());}
 function save(){localStorage.setItem(LS,JSON.stringify(ST));}
 const TOTALQ=QUESTIONS.filter(q=>q.type==='single'||q.type==='multi').length;
 const QMAP={};QUESTIONS.forEach(q=>QMAP[q.id]=q);
@@ -273,11 +276,11 @@ function setEq(a,b){a=[...a].sort();b=[...b].sort();return a.length===b.length&&
 function renderSidebar(){
   const nav=document.getElementById('filterNav');nav.innerHTML='';
   FILTERS.forEach((f,idx)=>{
-    const n=f[2]?QUESTIONS.filter(f[2]).length:soloList().length;
+    const n=(typeof f[2]==='function')?QUESTIONS.filter(f[2]).length:soloListFor(f[2]).length;
     const b=document.createElement('button');
     b.className='nav-item'+(ST.filter===idx?' active':'');
     b.innerHTML=`<span style="display:flex;align-items:center"><span class="nav-dot" style="background:${f[1]}"></span>${f[0]}</span><span class="count">${n}</span>`;
-    b.onclick=()=>{ST.filter=idx;save();render();document.getElementById('main').scrollTop=0;if(window.innerWidth<=768)toggleSidebar(true);};
+    b.onclick=()=>{ST.filter=idx;ST.soloIdx=0;save();render();document.getElementById('main').scrollTop=0;if(window.innerWidth<=768)toggleSidebar(true);};
     nav.appendChild(b);
   });
   const ansd=Object.values(ST.ans).filter(a=>a.checked&&(a.correct===true||a.correct===false));
@@ -345,13 +348,14 @@ function renderSolo(){
   if(!list.length){main.innerHTML='<div class="empty-card">족보 문항 없음</div>';return;}
   let idx=Math.min(ST.soloIdx||0,list.length-1);if(idx<0)idx=0;ST.soloIdx=idx;
   const q=list[idx];const st=ST.ans[q.id]||{checked:false};const pct=Math.round((idx+1)/list.length*100);
-  let h=`<div class="topbar"><h1>⚡ 족보 몰아풀기 <span class="cnt">${idx+1} / ${list.length} · ${pct}%</span></h1></div>`;
+  const mc=soloMode()==='MC';
+  let h=`<div class="topbar"><h1>${FILTERS[ST.filter][0]} <span class="cnt">${idx+1} / ${list.length} · ${pct}%</span></h1></div>`;
   h+=`<div class="solo-prog"><div style="width:${pct}%"></div></div>`;
   h+=cardHtml(q);
   h+=`<div class="solo-nav"><button class="solo-btn" onclick="soloMove(-1)">← 이전</button>`;
   if(q.type==='multi'&&!st.checked)h+=`<button class="solo-btn primary" onclick="check(${q.id})">✓ 정답 확인</button>`;
   h+=`<button class="solo-btn primary" onclick="soloMove(1)">다음 →</button></div>`;
-  h+=`<div class="solo-hint">⌨ 키보드: <b>1~5</b> 답 선택 · <b>← →</b> 이동 · 정답 맞히면 자동으로 다음</div>`;
+  h+=`<div class="solo-hint">⌨ ${mc?'<b>1~5</b> 답 선택 · ':''}<b>← →</b> 이동${mc?' · 정답 맞히면 자동으로 다음':' · 답은 「모범답안 보기」'}</div>`;
   main.innerHTML=h;main.scrollTop=0;
 }
 window.soloMove=function(d){const list=soloList();let idx=(ST.soloIdx||0)+d;idx=Math.max(0,Math.min(list.length-1,idx));ST.soloIdx=idx;save();renderSolo();};
@@ -413,7 +417,7 @@ window.pick=function(id,n){const q=QMAP[id];let st=ST.ans[id]||{selected:[],chec
   ST.ans[id]=st;save();render();};
 document.addEventListener('keydown',e=>{
   if(!isSolo())return;
-  if(/^[1-9]$/.test(e.key)){const list=soloList();const q=list[ST.soloIdx||0];
+  if(/^[1-9]$/.test(e.key)&&soloMode()==='MC'){const list=soloList();const q=list[ST.soloIdx||0];
     if(q){const st=ST.ans[q.id];if(!(st&&st.checked)){const n=+e.key;if(n<=(q.choices||[]).length){pick(q.id,n);e.preventDefault();}}}}
   else if(e.key==='ArrowRight'){soloMove(1);e.preventDefault();}
   else if(e.key==='ArrowLeft'){soloMove(-1);e.preventDefault();}
