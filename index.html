@@ -14,7 +14,7 @@
     --correct:#1DB954; --correct-text:#c5fad6; --wrong:#f15e6c; --wrong-text:#ffd0d6;
     --wrong-soft:rgba(241,94,108,.15); --warn:#ffa116; --warn-soft:rgba(255,161,22,.15);
     --border:#2a2a2a; --grad-main:linear-gradient(180deg,#1a1a1a 0%,var(--bg-base) 280px);
-    --shadow-card:0 4px 20px rgba(0,0,0,.3); --divider:rgba(255,255,255,.08);
+    --shadow-card:0 4px 20px rgba(0,0,0,.3);
     --tag-bg:rgba(255,255,255,.06); --tag-text:#b3b3b3; --explanation-bg:rgba(255,255,255,.04);
     --choice-bg:rgba(255,255,255,.03); --hover-card:rgba(255,255,255,.07);
     --c-jokbo:#ffb74d; --c-multi:#a884ff;
@@ -26,7 +26,7 @@
     --correct:#1aa84b; --correct-text:#14532d; --wrong:#d63b48; --wrong-text:#991b1b;
     --wrong-soft:rgba(214,59,72,.1); --warn:#d97706; --warn-soft:rgba(217,119,6,.12);
     --border:#e2e2e0; --grad-main:linear-gradient(180deg,#ececea 0%,var(--bg-base) 280px);
-    --shadow-card:0 2px 12px rgba(0,0,0,.06); --divider:rgba(0,0,0,.08);
+    --shadow-card:0 2px 12px rgba(0,0,0,.06);
     --tag-bg:rgba(0,0,0,.05); --tag-text:#4b5563; --explanation-bg:rgba(0,0,0,.03);
     --choice-bg:rgba(0,0,0,.02); --hover-card:rgba(0,0,0,.05);
   }
@@ -34,14 +34,14 @@
   html,body{height:100%;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;
     background:var(--bg-base);color:var(--text-primary);-webkit-font-smoothing:antialiased;line-height:1.5}
   button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
-  .app{display:grid;grid-template-columns:260px 1fr;grid-template-rows:1fr 86px;height:100vh;gap:8px;padding:8px}
+  .app{display:grid;grid-template-columns:260px 1fr;height:100vh;gap:8px;padding:8px}
   .menu-btn{display:none;position:fixed;top:12px;left:12px;width:44px;height:44px;border-radius:10px;
     background:var(--bg-elevated);border:1px solid var(--border);color:var(--text-primary);font-size:22px;
     z-index:50;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15)}
   .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99}
   .sidebar-backdrop.active{display:block}
-  .sidebar{grid-row:1;background:var(--bg-sidebar);border-radius:8px;padding:22px 16px;overflow-y:auto;
-    display:flex;flex-direction:column;gap:20px;border:1px solid var(--border)}
+  .sidebar{background:var(--bg-sidebar);border-radius:8px;padding:22px 16px;overflow-y:auto;
+    display:flex;flex-direction:column;gap:18px;border:1px solid var(--border)}
   .logo{display:flex;align-items:center;gap:10px;padding:0 6px 14px;border-bottom:1px solid var(--border)}
   .logo-icon{font-size:26px}
   .logo-text{font-size:17px;font-weight:800;letter-spacing:-.3px}
@@ -67,35 +67,47 @@
   .stats-row span:last-child{color:var(--text-primary);font-weight:700}
   .reset-btn{width:100%;margin-top:12px;padding:8px;background:var(--wrong-soft);color:var(--wrong);
     border:1px solid var(--wrong);border-radius:6px;font-size:12px;font-weight:700}
-  .main{grid-row:1;background:var(--grad-main);border-radius:8px;overflow-y:auto;padding:28px 36px 36px;border:1px solid var(--border)}
-  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px}
-  .topbar h1{font-size:22px;font-weight:800;letter-spacing:-.5px}
-  .progress-text{font-size:13px;color:var(--text-muted);font-weight:600;white-space:nowrap}
-  .progress-bar-wrap{height:4px;background:var(--tag-bg);border-radius:999px;overflow:hidden;margin-bottom:26px}
-  .progress-bar{height:100%;background:var(--accent);border-radius:999px;transition:width .4s cubic-bezier(.2,.8,.2,1)}
-  .question-card{background:var(--bg-elevated);border-radius:12px;padding:30px;box-shadow:var(--shadow-card);border:1px solid var(--border)}
-  .question-card.concept{border-color:var(--accent);background:linear-gradient(180deg,var(--accent-soft),var(--bg-elevated) 90px)}
-  .qmeta{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
-  .pill{font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700;letter-spacing:.3px;color:#0d1320}
+  .main{background:var(--grad-main);border-radius:8px;overflow-y:auto;padding:22px 30px 60px;border:1px solid var(--border)}
+  .topbar{position:sticky;top:-22px;z-index:10;background:linear-gradient(180deg,var(--bg-base) 70%,transparent);
+    margin:-22px -30px 8px;padding:18px 30px 12px}
+  .topbar h1{font-size:21px;font-weight:800;letter-spacing:-.5px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .topbar h1 .cnt{font-size:13px;color:var(--text-muted);font-weight:600}
+  .search{margin-top:11px;width:100%;background:var(--choice-bg);border:1px solid var(--border);border-radius:10px;
+    padding:10px 14px;color:var(--text-primary);font-size:14px;font-family:inherit}
+  /* group */
+  .grp{margin:20px 0 6px}
+  .grphd{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;
+    padding-bottom:7px;border-bottom:1px solid var(--border)}
+  .grphd .pl{font-size:11px;font-weight:800}
+  .grphd h2{font-size:16.5px;font-weight:800;margin:0;letter-spacing:-.3px}
+  .pill{font-size:11px;padding:3px 9px;border-radius:999px;font-weight:700;letter-spacing:.3px}
   .pill-tag{background:var(--tag-bg);color:var(--tag-text);font-weight:600}
   .pill-multi{background:var(--c-multi);color:#0d1320}
   .pill-jokbo{background:var(--c-jokbo);color:#0d1320}
+  .pill-jakja{background:rgba(29,185,84,.22);color:var(--accent)}
   .pill-freq{background:#f15e6c;color:#fff}
   .pill-var{background:#a884ff;color:#0d1320}
   .pill-short{background:#7ee0c0;color:#0d1320}
   .pill-concept{background:var(--accent);color:#0d1320}
-  .qno{color:var(--text-subdued);font-size:12px;font-weight:700;margin-left:auto}
-  .bm{font-size:16px;margin-left:8px;opacity:.32;transition:.15s;background:none;line-height:1}
+  /* card */
+  .qcard{background:var(--bg-elevated);border-radius:11px;padding:17px 19px;margin:10px 0;
+    box-shadow:var(--shadow-card);border:1px solid var(--border);border-left-width:4px}
+  .qcard.src-jokbo{border-left-color:var(--c-jokbo)}
+  .qcard.src-jakja{border-left-color:var(--accent)}
+  .qcard.src-concept{border-left-color:var(--accent);background:linear-gradient(180deg,var(--accent-soft),var(--bg-elevated) 70px)}
+  .qmeta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:11px}
+  .qno{color:var(--text-subdued);font-size:11px;font-weight:700;margin-left:auto}
+  .bm{font-size:16px;margin-left:6px;opacity:.32;transition:.15s;background:none;line-height:1}
   .bm.on{opacity:1}.bm:hover{opacity:.85;transform:scale(1.12)}
-  .qtext{font-size:17.5px;font-weight:700;line-height:1.45;margin-bottom:18px;white-space:pre-wrap}
-  .concept .qtext{color:var(--accent)}
-  .multi-note{color:var(--c-multi);font-weight:700;font-size:13px;margin:-6px 0 14px}
-  .exams{font-size:12px;color:var(--text-subdued);margin:-8px 0 14px;font-weight:600}
-  .choices{display:flex;flex-direction:column;gap:10px}
-  .choice{display:flex;align-items:flex-start;gap:13px;padding:14px 18px;background:var(--choice-bg);
-    border:1px solid transparent;border-radius:8px;text-align:left;width:100%;transition:.15s;color:var(--text-primary);font-size:15px}
-  .choice:hover:not(.locked){background:var(--hover-card);border-color:var(--border);transform:translateX(4px)}
-  .choice .num{font-weight:800;color:var(--text-muted);min-width:22px;font-size:16px}
+  .qtext{font-size:15.5px;font-weight:700;line-height:1.5;margin-bottom:13px;white-space:pre-wrap}
+  .concept-title{font-size:16px;font-weight:800;color:var(--accent);margin-bottom:9px}
+  .multi-note{color:var(--c-multi);font-weight:700;font-size:12.5px;margin:-4px 0 11px}
+  .exams{font-size:11.5px;color:var(--text-subdued);margin:-4px 0 11px;font-weight:600}
+  .choices{display:flex;flex-direction:column;gap:8px}
+  .choice{display:flex;align-items:flex-start;gap:11px;padding:11px 15px;background:var(--choice-bg);
+    border:1px solid transparent;border-radius:8px;text-align:left;width:100%;transition:.12s;color:var(--text-primary);font-size:14.5px}
+  .choice:hover:not(.locked){background:var(--hover-card);border-color:var(--border)}
+  .choice .num{font-weight:800;color:var(--text-muted);min-width:20px;font-size:15px}
   .choice.sel{border-color:var(--accent);background:var(--accent-soft)}
   .choice.sel .num{color:var(--accent)}
   .choice.locked{cursor:default}
@@ -105,47 +117,32 @@
   .choice.wrong .num{color:var(--wrong)}
   .choice.miss{border-color:var(--warn);background:var(--warn-soft)}
   .choice.miss .num{color:var(--warn)}
-  .explanation{margin-top:18px;padding:16px 18px;background:var(--explanation-bg);border-radius:8px;
-    border-left:3px solid var(--accent);font-size:14px;line-height:1.65;color:var(--text-primary);white-space:pre-wrap}
-  .concept .explanation{margin-top:0}
-  .verdict{font-weight:800;margin-bottom:8px;font-size:15px;display:flex;align-items:center;gap:8px}
+  .checkbtn{margin-top:9px;padding:9px 16px;background:var(--accent);color:#000;border-radius:999px;font-weight:800;font-size:13px}
+  .checkbtn.ghost{background:var(--tag-bg);color:var(--text-primary)}
+  .shortans-btn{margin-top:2px;padding:11px;width:100%;background:var(--accent-soft);color:var(--accent);
+    border:1px solid var(--accent);border-radius:8px;font-weight:800;font-size:13.5px}
+  .explanation{margin-top:13px;padding:14px 16px;background:var(--explanation-bg);border-radius:8px;
+    border-left:3px solid var(--accent);font-size:13.5px;line-height:1.62;color:var(--text-primary);white-space:pre-wrap}
+  .verdict{font-weight:800;margin-bottom:7px;font-size:14px;display:flex;align-items:center;gap:7px}
   .verdict.correct{color:var(--accent)} .verdict.wrong{color:var(--wrong)}
   .explanation strong{font-weight:800}
-  .shortans-btn{margin-top:6px;padding:12px;width:100%;background:var(--accent-soft);color:var(--accent);
-    border:1px solid var(--accent);border-radius:8px;font-weight:800;font-size:14px}
-  .selfgrade{display:flex;gap:8px;margin-top:12px}
-  .sg{flex:1;padding:10px;border:1px solid var(--border);background:var(--choice-bg);border-radius:8px;font-weight:700;font-size:13px;color:var(--text-muted)}
+  .selfgrade{display:flex;gap:8px;margin-top:11px}
+  .sg{flex:1;padding:9px;border:1px solid var(--border);background:var(--choice-bg);border-radius:8px;font-weight:700;font-size:12.5px;color:var(--text-muted)}
   .sg.o.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
   .sg.x.on{background:var(--wrong-soft);border-color:var(--wrong);color:var(--wrong)}
-  .player{grid-row:2;grid-column:1/-1;background:var(--bg-elevated);border-radius:8px;padding:12px 24px;
-    display:flex;align-items:center;gap:16px;box-shadow:var(--shadow-card);border:1px solid var(--border)}
-  .player-info{display:flex;flex-direction:column;min-width:130px}
-  .player-info .now{font-size:13px;font-weight:700}
-  .player-info .meta{font-size:11px;color:var(--text-muted);margin-top:2px}
-  .player-controls{display:flex;gap:8px;flex:1;justify-content:center}
-  .ctrl-btn{padding:10px 18px;background:var(--tag-bg);border-radius:999px;font-size:13px;font-weight:700;
-    transition:.15s;color:var(--text-primary);display:flex;align-items:center;gap:6px}
-  .ctrl-btn:hover{background:var(--hover-card);transform:scale(1.04)}
-  .ctrl-btn:active{transform:scale(.97)}
-  .ctrl-btn.primary{background:var(--accent);color:#000;font-weight:800;padding:10px 24px}
-  .ctrl-btn.primary:hover{background:var(--accent-hover)}
-  .player-extra{font-size:11px;color:var(--text-subdued);min-width:74px;text-align:right;font-weight:600}
   .empty-card{background:var(--bg-elevated);border-radius:12px;padding:60px 32px;text-align:center;color:var(--text-muted)}
   ::-webkit-scrollbar{width:10px}
   ::-webkit-scrollbar-thumb{background:rgba(128,128,128,.25);border-radius:999px}
   @media(max-width:768px){
-    .app{grid-template-columns:1fr;grid-template-rows:1fr 80px;padding:4px}
+    .app{grid-template-columns:1fr;padding:4px}
     .menu-btn{display:flex}
-    .sidebar{position:fixed;top:8px;bottom:92px;left:8px;width:280px;max-width:calc(100vw - 16px);z-index:100;
+    .sidebar{position:fixed;top:8px;bottom:8px;left:8px;width:280px;max-width:calc(100vw - 16px);z-index:100;
       transform:translateX(calc(-100% - 16px));transition:transform .25s cubic-bezier(.2,.8,.2,1)}
     .sidebar.open{transform:translateX(0)}
-    .main{padding:60px 16px 20px}
+    .main{padding:56px 14px 40px}
+    .topbar{margin:-56px -14px 8px;padding:14px 16px 10px;top:-56px}
     .topbar h1{font-size:18px}
-    .question-card{padding:18px 16px}
-    .player{padding:8px 12px;gap:8px}
-    .player-info{min-width:auto;flex:0 0 auto}
-    .player-extra{display:none}
-    .ctrl-btn{padding:9px 14px}
+    .qcard{padding:15px 15px}
   }
 </style>
 </head>
@@ -176,40 +173,41 @@
     </div>
   </aside>
   <main class="main" id="main"></main>
-  <div class="player" id="player"></div>
 </div>
 
 <script src="questions.js"></script>
 <script>
 const QUESTIONS = LABQ;
 const CIRC=['①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩'];
+const PARTORDER=['0_감별종합','1_바이러스','2_세균','3_곰팡이기생충','4_비감염','5_원숭이BL모델'];
 const PARTLBL={'0_감별종합':'감별·종합','1_바이러스':'바이러스','2_세균':'세균','3_곰팡이기생충':'곰팡이·기생충','4_비감염':'비감염성','5_원숭이BL모델':'원숭이·BL·모델'};
 const PARTCOL={'0_감별종합':'#bdbdbd','1_바이러스':'#ff6b6b','2_세균':'#4fc3f7','3_곰팡이기생충':'#81c784','4_비감염':'#c792ea','5_원숭이BL모델':'#ffb74d'};
+const NOSUM=q=>q.origin!=='summary';
 const FILTERS=[
-  ['전체','#1DB954',q=>true],
-  ['감별·종합','#bdbdbd',q=>q.part==='0_감별종합'],
-  ['바이러스','#ff6b6b',q=>q.part==='1_바이러스'],
-  ['세균','#4fc3f7',q=>q.part==='2_세균'],
-  ['곰팡이·기생충','#81c784',q=>q.part==='3_곰팡이기생충'],
-  ['비감염성','#c792ea',q=>q.part==='4_비감염'],
-  ['원숭이·BL·모델','#ffb74d',q=>q.part==='5_원숭이BL모델'],
-  ['족보 기출','var(--c-jokbo)',q=>q.source==='족보'],
+  ['전체','#1DB954',NOSUM],
+  ['감별·종합','#bdbdbd',q=>q.part==='0_감별종합'&&NOSUM(q)],
+  ['바이러스','#ff6b6b',q=>q.part==='1_바이러스'&&NOSUM(q)],
+  ['세균','#4fc3f7',q=>q.part==='2_세균'&&NOSUM(q)],
+  ['곰팡이·기생충','#81c784',q=>q.part==='3_곰팡이기생충'&&NOSUM(q)],
+  ['비감염성','#c792ea',q=>q.part==='4_비감염'&&NOSUM(q)],
+  ['원숭이·BL·모델','#ffb74d',q=>q.part==='5_원숭이BL모델'&&NOSUM(q)],
+  ['📕 족보 기출','var(--c-jokbo)',q=>q.origin==='jokbo'],
+  ['📝 자작 문제','#1ED760',q=>q.origin==='concept'],
   ['🔴 빈출(3회+)','#f15e6c',q=>(q.freq||0)>=3],
-  ['모두고르시오','var(--c-multi)',q=>q.type==='multi'],
-  ['✍️ 주관식','#7ee0c0',q=>q.type==='short'],
+  ['☑️ 모두고르시오','var(--c-multi)',q=>q.type==='multi'],
+  ['✍️ 주관식','#7ee0c0',q=>q.type==='short'&&NOSUM(q)],
   ['🔀 변형주의','#a884ff',q=>q.variant===true],
   ['📖 개념만','#1ED760',q=>q.origin==='summary'],
   ['🔖 북마크','#ff9e64',q=>!!(ST.bookmarks&&ST.bookmarks[q.id])],
-  ['오답만','#f15e6c',q=>{const s=ST.ans[q.id];return s&&s.checked&&s.correct===false;}],
+  ['❌ 오답만','#f15e6c',q=>{const s=ST.ans[q.id];return s&&s.checked&&s.correct===false;}],
 ];
-const LS='vetlabQuizV1';
+const LS='vetlabQuizV2';
 let ST=load();
 function load(){try{const j=JSON.parse(localStorage.getItem(LS));if(j&&j.ans){if(!j.bookmarks)j.bookmarks={};return j;}}catch(e){}
   return{ans:{},filter:0,theme:'dark',bookmarks:{}};}
 function save(){localStorage.setItem(LS,JSON.stringify(ST));}
-let order=QUESTIONS.map((q,i)=>i);
-let curId=null;
 const TOTALQ=QUESTIONS.filter(q=>q.type==='single'||q.type==='multi').length;
+const QMAP={};QUESTIONS.forEach(q=>QMAP[q.id]=q);
 function applyTheme(){document.documentElement.setAttribute('data-theme',ST.theme);
   document.getElementById('themeBtn').textContent=ST.theme==='dark'?'🌙':'☀️';}
 function esc(s){return(s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
@@ -217,19 +215,18 @@ function md(s){return esc(s).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
   .replace(/✓/g,'<span style="color:var(--accent);font-weight:800">✓</span>')
   .replace(/✗/g,'<span style="color:var(--wrong);font-weight:800">✗</span>');}
 function setEq(a,b){a=[...a].sort();b=[...b].sort();return a.length===b.length&&a.every((v,i)=>v===b[i]);}
-function activeList(){const f=FILTERS[ST.filter][2];return order.map(i=>QUESTIONS[i]).filter(f);}
 
 function renderSidebar(){
   const nav=document.getElementById('filterNav');nav.innerHTML='';
   FILTERS.forEach((f,idx)=>{
-    const n=order.map(i=>QUESTIONS[i]).filter(f[2]).length;
+    const n=QUESTIONS.filter(f[2]).length;
     const b=document.createElement('button');
     b.className='nav-item'+(ST.filter===idx?' active':'');
     b.innerHTML=`<span style="display:flex;align-items:center"><span class="nav-dot" style="background:${f[1]}"></span>${f[0]}</span><span class="count">${n}</span>`;
-    b.onclick=()=>{ST.filter=idx;save();curId=null;render();if(window.innerWidth<=768)toggleSidebar(true);};
+    b.onclick=()=>{ST.filter=idx;save();render();document.getElementById('main').scrollTop=0;if(window.innerWidth<=768)toggleSidebar(true);};
     nav.appendChild(b);
   });
-  const ansd=Object.values(ST.ans).filter(a=>a.checked&&a.correct!==null&&a.correct!==undefined);
+  const ansd=Object.values(ST.ans).filter(a=>a.checked&&(a.correct===true||a.correct===false));
   const cor=ansd.filter(a=>a.correct).length;
   document.getElementById('stCorrect').textContent=cor;
   document.getElementById('stWrong').textContent=ansd.length-cor;
@@ -239,103 +236,109 @@ function renderSidebar(){
 }
 function pillsHtml(q){
   let p=`<span class="pill" style="background:${PARTCOL[q.part]||'#999'};color:#0d1320">${PARTLBL[q.part]||q.part}</span>`;
-  if(q.origin==='summary'){p+=`<span class="pill pill-concept">📖 개념</span>`;}
-  else{
-    if(q.source==='족보')p+=`<span class="pill pill-jokbo">족보 ${esc(q.exam||'')}</span>`;
-    else p+=`<span class="pill pill-tag">자작</span>`;
+  if(q.origin==='summary')p+=`<span class="pill pill-concept">📖 개념</span>`;
+  else if(q.origin==='jokbo')p+=`<span class="pill pill-jokbo">📕 족보 ${esc(q.exam||'')}</span>`;
+  else p+=`<span class="pill pill-jakja">📝 자작</span>`;
+  if(q.origin!=='summary'){
     if((q.freq||0)>=2)p+=`<span class="pill pill-freq">🔴 ${q.freq}회</span>`;
     if(q.type==='multi')p+=`<span class="pill pill-multi">모두 고르시오</span>`;
     if(q.type==='short')p+=`<span class="pill pill-short">✍️ 주관식</span>`;
     if(q.variant)p+=`<span class="pill pill-var">🔀 변형</span>`;
   }
-  if(q.topic)p+=`<span class="pill pill-tag">${esc(q.topic)}</span>`;
   return p;
 }
-function renderMain(){
-  const list=activeList();const main=document.getElementById('main');
-  if(!list.length){main.innerHTML='<div class="empty-card"><div style="font-size:42px">📭</div>해당 필터 문항 없음</div>';return;}
-  let pos=list.findIndex(q=>q.id===curId);if(pos<0){pos=0;curId=list[0].id;}
-  const q=list[pos];const st=ST.ans[q.id]||{selected:[],checked:false,correct:false};
-  const pct=Math.round((pos+1)/list.length*100);
-  let h=`<div class="topbar"><h1>${FILTERS[ST.filter][0]}</h1><span class="progress-text">${pos+1} / ${list.length} · ${pct}%</span></div>`;
-  h+=`<div class="progress-bar-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>`;
-  const concept=q.origin==='summary';
-  h+=`<div class="question-card${concept?' concept':''}"><div class="qmeta">${pillsHtml(q)}<span class="qno">#${q.id}</span><button class="bm${ST.bookmarks[q.id]?' on':''}" onclick="toggleBm(${q.id})" title="북마크">🔖</button></div>`;
-
-  if(concept){
-    h+=`<div class="qtext">📖 ${esc(q.topic)} — 핵심개념</div>`;
-    h+=`<div class="explanation">${md(q.explain)}</div>`;
-  } else if(q.type==='short'){
-    h+=`<div class="qtext">${md(q.q)}</div>`;
-    if(q.exams&&q.exams.length>1)h+=`<div class="exams">출제: ${q.exams.join(' · ')}</div>`;
-    if(st.checked){
-      h+=`<div class="explanation"><div class="verdict correct">✍️ 모범답안</div>${md(q.explain)}</div>`;
-      h+=selfGrade(q,st);
-    }else{
-      h+=`<button class="shortans-btn" onclick="reveal(${q.id})">✍️ 모범답안 보기</button>`;
-    }
-  } else {
-    h+=`<div class="qtext">${md(q.q)}</div>`;
-    if(q.type==='multi')h+=`<div class="multi-note">⚠️ 정답이 1개 이상일 수 있음 (개수 비공개)</div>`;
-    if(q.exams&&q.exams.length>1)h+=`<div class="exams">출제: ${q.exams.join(' · ')}</div>`;
-    h+=`<div class="choices">`;
-    q.choices.forEach((ch,i)=>{
-      const n=i+1;let cls='choice';const sel=st.selected.includes(n);
-      if(st.checked){cls+=' locked';const isA=q.answer.includes(n);
-        if(isA&&sel)cls+=' correct';else if(!isA&&sel)cls+=' wrong';else if(isA&&!sel)cls+=' miss';}
-      else if(sel)cls+=' sel';
-      h+=`<button class="${cls}" onclick="pick(${q.id},${n})"><span class="num">${CIRC[i]||n}</span><span>${md(ch)}</span></button>`;
-    });
-    h+=`</div>`;
-    if(st.checked){
-      const marks=q.answer.map(a=>CIRC[a-1]).join(' ');
-      h+=`<div class="explanation"><div class="verdict ${st.correct?'correct':'wrong'}">${st.correct?'⭕ 정답':'❌ 오답'} &nbsp;·&nbsp; 정답: ${marks}</div>${md(q.explain)}</div>`;
-    }
+function cardHtml(q){
+  const st=ST.ans[q.id]||{selected:[],checked:false,correct:false};
+  const srcCls=q.origin==='summary'?'src-concept':(q.origin==='jokbo'?'src-jokbo':'src-jakja');
+  let h=`<div class="qcard ${srcCls}"><div class="qmeta">${pillsHtml(q)}<span class="qno">#${q.id}</span><button class="bm${ST.bookmarks[q.id]?' on':''}" onclick="toggleBm(${q.id})">🔖</button></div>`;
+  if(q.origin==='summary'){
+    h+=`<div class="concept-title">📖 ${esc(q.topic)} — 핵심개념</div><div class="explanation" style="margin-top:0">${md(q.explain)}</div>`;
+    return h+`</div>`;
   }
+  h+=`<div class="qtext">${md(q.q)}</div>`;
+  if(q.exams&&q.exams.length>1)h+=`<div class="exams">출제: ${q.exams.join(' · ')}</div>`;
+  if(q.type==='short'){
+    if(st.checked){h+=`<div class="explanation"><div class="verdict correct">✍️ 모범답안</div>${md(q.explain)}</div>`+selfGrade(q,st);}
+    else h+=`<button class="shortans-btn" onclick="reveal(${q.id})">✍️ 모범답안 보기</button>`;
+    return h+`</div>`;
+  }
+  if(q.type==='multi')h+=`<div class="multi-note">⚠️ 정답 1개 이상 (개수 비공개)</div>`;
+  h+=`<div class="choices">`;
+  q.choices.forEach((ch,i)=>{
+    const n=i+1;let cls='choice';const sel=st.selected.includes(n);
+    if(st.checked){cls+=' locked';const isA=q.answer.includes(n);
+      if(isA&&sel)cls+=' correct';else if(!isA&&sel)cls+=' wrong';else if(isA&&!sel)cls+=' miss';}
+    else if(sel)cls+=' sel';
+    h+=`<button class="${cls}" onclick="pick(${q.id},${n})"><span class="num">${CIRC[i]||n}</span><span>${md(ch)}</span></button>`;
+  });
   h+=`</div>`;
-  main.innerHTML=h;main.scrollTop=0;
+  if(q.type==='multi'&&!st.checked){
+    h+=`<button class="checkbtn" onclick="check(${q.id})">✓ 정답 확인</button>`;
+  }
+  if(st.checked){
+    const marks=q.answer.map(a=>CIRC[a-1]).join(' ');
+    h+=`<div class="explanation"><div class="verdict ${st.correct?'correct':'wrong'}">${st.correct?'⭕ 정답':'❌ 오답'} · 정답: ${marks}</div>${md(q.explain)}</div>`;
+    h+=`<button class="checkbtn ghost" style="margin-top:9px" onclick="retry(${q.id})">↺ 다시 풀기</button>`;
+  }
+  return h+`</div>`;
 }
 function selfGrade(q,st){
   const s=st.self;
   return `<div class="selfgrade"><button class="sg o${s==='o'?' on':''}" onclick="grade(${q.id},'o')">⭕ 맞췄음</button><button class="sg x${s==='x'?' on':''}" onclick="grade(${q.id},'x')">❌ 틀렸음</button></div>`;
 }
-function renderPlayer(){
-  const list=activeList();const p=document.getElementById('player');
-  if(!list.length){p.innerHTML='';return;}
-  let pos=list.findIndex(q=>q.id===curId);if(pos<0)pos=0;
-  const q=list[pos];const st=ST.ans[q.id]||{checked:false};
-  const pct=Math.round((pos+1)/list.length*100);
-  let mid='';
-  if(q.origin==='summary'){mid='';}
-  else if(q.type==='short'){mid=st.checked?`<button class="ctrl-btn" onclick="retry(${q.id})">↺ 다시</button>`:`<button class="ctrl-btn primary" onclick="reveal(${q.id})">✍️ 답 보기</button>`;}
-  else if(q.type==='multi'){mid=st.checked?`<button class="ctrl-btn" onclick="retry(${q.id})">↺ 다시</button>`:`<button class="ctrl-btn primary" onclick="check(${q.id})">✓ 정답 확인</button>`;}
-  else {mid=st.checked?`<button class="ctrl-btn" onclick="retry(${q.id})">↺ 다시</button>`:'';}
-  p.innerHTML=`<div class="player-info"><div class="now">${PARTLBL[q.part]||q.part}</div><div class="meta">${pos+1} / ${list.length}</div></div>
-    <div class="player-controls"><button class="ctrl-btn" onclick="move(-1)">← 이전</button>${mid}<button class="ctrl-btn" onclick="move(1)">다음 →</button></div>
-    <div class="player-extra">${pct}% 진행</div>`;
+function render(){
+  applyTheme();renderSidebar();
+  const f=FILTERS[ST.filter][2];
+  const list=QUESTIONS.filter(f);
+  const main=document.getElementById('main');
+  let h=`<div class="topbar"><h1>${FILTERS[ST.filter][0]} <span class="cnt">${list.length}개</span></h1>
+    <input class="search" id="search" placeholder="🔍 병원체·발문 검색 (예: MHV, syncytium, zoonosis)" value="${esc(curTerm)}" oninput="onSearch(this.value)"></div>`;
+  let view=list;
+  if(curTerm){const t=curTerm.toLowerCase();view=list.filter(q=>((q.q||'')+(q.topic||'')+(q.explain||'')).toLowerCase().includes(t));}
+  if(!view.length){h+=`<div class="empty-card"><div style="font-size:42px">📭</div>해당 문항 없음</div>`;main.innerHTML=h;bindSearch();return;}
+  // group by part>topic, preserve order
+  const groups={};const gorder=[];
+  view.forEach(q=>{const k=q.part+'||'+q.topic;if(!groups[k]){groups[k]=[];gorder.push(k);}groups[k].push(q);});
+  gorder.sort((a,b)=>{
+    const qa=groups[a][0],qb=groups[b][0];
+    const pa=PARTORDER.indexOf(qa.part),pb=PARTORDER.indexOf(qb.part);
+    if(pa!==pb)return pa-pb;
+    const fa=Math.max(...groups[a].map(x=>x.freq||0)),fb=Math.max(...groups[b].map(x=>x.freq||0));
+    return fb-fa;
+  });
+  gorder.forEach(k=>{
+    const items=groups[k];const q0=items[0];const maxf=Math.max(...items.map(x=>x.freq||0));
+    h+=`<div class="grp"><div class="grphd"><span class="pl" style="color:${PARTCOL[q0.part]}">${PARTLBL[q0.part]}</span><h2>${esc(q0.topic)}</h2>`;
+    if(maxf>=2)h+=`<span class="pill pill-freq">🔴 ${maxf}회</span>`;
+    h+=`<span class="pill pill-tag">${items.length}</span></div>`;
+    items.forEach(q=>h+=cardHtml(q));
+    h+=`</div>`;
+  });
+  main.innerHTML=h;bindSearch();
 }
-function render(){applyTheme();renderSidebar();renderMain();renderPlayer();}
-window.pick=function(id,n){const q=QUESTIONS.find(x=>x.id===id);let st=ST.ans[id]||{selected:[],checked:false,correct:false};
+let curTerm='';
+function bindSearch(){const el=document.getElementById('search');if(el){el.oninput=e=>onSearch(e.target.value);}}
+let searchTimer=null;
+function onSearch(v){curTerm=v;clearTimeout(searchTimer);searchTimer=setTimeout(()=>{const sc=document.getElementById('main').scrollTop;render();
+  const el=document.getElementById('search');if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length);}},180);}
+window.pick=function(id,n){const q=QMAP[id];let st=ST.ans[id]||{selected:[],checked:false,correct:false};
   if(st.checked)return;
   if(q.type==='single'){st.selected=[n];st.checked=true;st.correct=setEq(st.selected,q.answer);}
   else st.selected=st.selected.includes(n)?st.selected.filter(x=>x!==n):[...st.selected,n];
   ST.ans[id]=st;save();render();};
-window.check=function(id){const q=QUESTIONS.find(x=>x.id===id);let st=ST.ans[id]||{selected:[],checked:false,correct:false};
+window.check=function(id){const q=QMAP[id];let st=ST.ans[id]||{selected:[],checked:false,correct:false};
   if(!st.selected||!st.selected.length){alert('선지를 선택하세요');return;}
   st.checked=true;st.correct=setEq(st.selected,q.answer);ST.ans[id]=st;save();render();};
 window.reveal=function(id){let st=ST.ans[id]||{selected:[],checked:false};st.checked=true;st.correct=null;ST.ans[id]=st;save();render();};
-window.grade=function(id,v){let st=ST.ans[id];if(!st)return;st.correct=(st.self===v)?null:(v==='o');st.self=(st.self===v)?null:v;ST.ans[id]=st;save();render();};
+window.grade=function(id,v){let st=ST.ans[id];if(!st)return;st.self=(st.self===v)?null:v;st.correct=(st.self==='o')?true:(st.self==='x'?false:null);ST.ans[id]=st;save();render();};
 window.retry=function(id){ST.ans[id]={selected:[],checked:false,correct:false};save();render();};
-window.move=function(d){const list=activeList();if(!list.length)return;let pos=list.findIndex(q=>q.id===curId);if(pos<0)pos=0;
-  pos=Math.max(0,Math.min(list.length-1,pos+d));curId=list[pos].id;render();};
 window.toggleTheme=function(){ST.theme=ST.theme==='dark'?'light':'dark';save();applyTheme();};
 window.toggleSidebar=function(force){const sb=document.getElementById('sidebar'),bd=document.getElementById('backdrop');
   const open=force===true?false:!sb.classList.contains('open');
   sb.classList.toggle('open',open);bd.classList.toggle('active',open);};
 window.toggleBm=function(id){if(ST.bookmarks[id])delete ST.bookmarks[id];else ST.bookmarks[id]=true;save();render();};
 window.resetAll=function(){if(!confirm('모든 답·점수를 초기화할까요? (북마크는 유지)'))return;
-  ST={ans:{},filter:0,theme:ST.theme,bookmarks:ST.bookmarks};order=QUESTIONS.map((q,i)=>i);save();curId=null;render();};
-document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1);});
+  ST={ans:{},filter:ST.filter,theme:ST.theme,bookmarks:ST.bookmarks};save();render();};
 render();
 </script>
 </body>
