@@ -1,256 +1,342 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="dark">
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>실험동물의학2 기말 — 족보·개념 퀴즈</title>
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<meta charset="UTF-8" />
+<title>🐭 실험동물의학2 기말 퀴즈</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0a0a0c; --bg2:#121216; --bg3:#1a1a20; --card:#16161c; --card2:#1e1e26;
-  --tx:#ececed; --tx2:#a8a8b3; --tx3:#6b6b78; --line:#26262e;
-  --acc:#1db954; --acc2:#13833b; --red:#ff5c5c; --redbg:#2a1518; --grn:#2ee06a; --grnbg:#10241a;
-  --blue:#5ca8ff; --gold:#ffce54; --purple:#bf7bff;
-}
-[data-theme="light"]{
-  --bg:#f3f3f5; --bg2:#fff; --bg3:#e9e9ee; --card:#fff; --card2:#f6f6f9;
-  --tx:#1a1a20; --tx2:#55555f; --tx3:#9a9aa5; --line:#e2e2e8;
-  --acc:#1db954; --acc2:#13833b; --red:#d62828; --redbg:#fbe8e8; --grn:#15913f; --grnbg:#e4f6ea;
-  --blue:#1f6fd6; --gold:#c98a00; --purple:#8a3ffb;
-}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);font-family:'Pretendard',system-ui,sans-serif;font-size:15px;line-height:1.55}
-.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
-/* sidebar */
-.side{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--bg2);border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:4px}
-.brand{font-weight:800;font-size:17px;padding:6px 10px 14px;letter-spacing:-.3px}
-.brand small{display:block;font-size:11px;color:var(--tx3);font-weight:600;margin-top:3px}
-.navb{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:9px;cursor:pointer;color:var(--tx2);font-weight:600;font-size:13.5px;border:none;background:none;width:100%;text-align:left;transition:.12s}
-.navb:hover{background:var(--bg3);color:var(--tx)}
-.navb.on{background:var(--acc);color:#fff}
-.navb .n{margin-left:auto;font-size:11px;opacity:.8;font-weight:700}
-.navb.on .n{opacity:.95}
-.sechd{font-size:10.5px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;padding:14px 11px 5px}
-/* main */
-.main{padding:0 0 80px;max-width:880px;margin:0 auto;width:100%}
-.top{position:sticky;top:0;z-index:20;background:linear-gradient(var(--bg) 60%,transparent);padding:18px 20px 12px;backdrop-filter:blur(6px)}
-.tit{font-size:22px;font-weight:800;letter-spacing:-.4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.tit .sub{font-size:12.5px;color:var(--tx2);font-weight:600}
-.tools{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.search{flex:1;min-width:140px;background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:9px 13px;color:var(--tx);font-size:14px;font-family:inherit}
-.iconb{background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:9px 13px;color:var(--tx);cursor:pointer;font-size:14px;font-weight:600}
-.wrap{padding:8px 20px 0}
-/* group */
-.grp{margin:22px 0 8px}
-.grphd{display:flex;align-items:center;gap:9px;margin:0 0 10px;flex-wrap:wrap}
-.grphd .pl{font-size:11px;font-weight:700;color:var(--tx3)}
-.grphd h2{font-size:17px;font-weight:800;margin:0;letter-spacing:-.3px}
-.badge{font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:20px}
-.b-freq{background:var(--redbg);color:var(--red)}
-.b-src{background:var(--bg3);color:var(--tx2)}
-.b-var{background:#2a2140;color:var(--purple)}
-.b-self{background:var(--grnbg);color:var(--grn)}
-.b-multi{background:#1d2740;color:var(--blue)}
-/* card */
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px;margin:9px 0}
-.card.sum{background:var(--card2);border-color:var(--acc2)}
-.qmeta{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
-.qmeta .exam{font-size:11px;color:var(--tx3);font-weight:600}
-.bm{margin-left:auto;background:none;border:none;cursor:pointer;font-size:17px;opacity:.5;padding:0 2px}
-.bm.on{opacity:1}
-.qx{font-weight:600;font-size:15px;margin-bottom:11px;white-space:pre-wrap}
-.sumtit{font-weight:800;font-size:15.5px;margin-bottom:6px;color:var(--acc)}
-.sumbody{color:var(--tx);font-size:14px}
-.ch{display:block;width:100%;text-align:left;background:var(--bg3);border:1.5px solid var(--line);border-radius:10px;padding:10px 13px;margin:6px 0;color:var(--tx);cursor:pointer;font-size:14px;font-family:inherit;transition:.1s;white-space:pre-wrap}
-.ch:hover{border-color:var(--tx3)}
-.ch .cn{font-weight:800;margin-right:7px;color:var(--tx2)}
-.ch.correct{background:var(--grnbg);border-color:var(--grn);color:var(--tx)}
-.ch.correct .cn{color:var(--grn)}
-.ch.wrong{background:var(--redbg);border-color:var(--red)}
-.ch.wrong .cn{color:var(--red)}
-.ch.dim{opacity:.55}
-.exp{margin-top:11px;padding:12px 13px;background:var(--bg2);border-left:3px solid var(--acc);border-radius:8px;font-size:13.5px;color:var(--tx);white-space:pre-wrap;display:none}
-.exp.show{display:block}
-.exp b,.sumbody b,.qx b{font-weight:800}
-.exp .ans{color:var(--grn);font-weight:800}
-.showbtn{background:var(--bg3);border:1px solid var(--line);border-radius:9px;padding:8px 14px;color:var(--acc);cursor:pointer;font-weight:700;font-size:13px;margin-top:4px}
-.selfgrade{display:flex;gap:7px;margin-top:10px}
-.sg{flex:1;border:1px solid var(--line);background:var(--bg3);border-radius:9px;padding:7px;cursor:pointer;font-weight:700;font-size:13px;color:var(--tx2)}
-.sg.o.on{background:var(--grnbg);border-color:var(--grn);color:var(--grn)}
-.sg.x.on{background:var(--redbg);border-color:var(--red);color:var(--red)}
-.empty{text-align:center;color:var(--tx3);padding:60px 20px;font-size:14px}
-.mobtop{display:none}
-@media(max-width:760px){
-  .app{grid-template-columns:1fr}
-  .side{display:none;position:fixed;z-index:50;width:80%;max-width:300px;box-shadow:0 0 40px #000a}
-  .side.open{display:flex}
-  .mobtop{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:30;background:var(--bg2);padding:11px 15px;border-bottom:1px solid var(--line)}
-  .mobtit{font-weight:800;font-size:15px}
-  .ham{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:7px 11px;font-size:16px;cursor:pointer;color:var(--tx)}
-  .top{padding:12px 15px 8px}.wrap{padding:4px 13px 0}.tit{font-size:18px}
-  .scrim{display:none;position:fixed;inset:0;background:#0008;z-index:40}
-  .scrim.open{display:block}
-}
+  :root, [data-theme="dark"]{
+    --bg-base:#121212; --bg-elevated:#181818; --bg-card:#1f1f1f; --bg-sidebar:#000;
+    --text-primary:#fff; --text-muted:#b3b3b3; --text-subdued:#6a6a6a;
+    --accent:#1DB954; --accent-hover:#1ED760; --accent-soft:rgba(29,185,84,.15);
+    --correct:#1DB954; --correct-text:#c5fad6; --wrong:#f15e6c; --wrong-text:#ffd0d6;
+    --wrong-soft:rgba(241,94,108,.15); --warn:#ffa116; --warn-soft:rgba(255,161,22,.15);
+    --border:#2a2a2a; --grad-main:linear-gradient(180deg,#1a1a1a 0%,var(--bg-base) 280px);
+    --shadow-card:0 4px 20px rgba(0,0,0,.3); --divider:rgba(255,255,255,.08);
+    --tag-bg:rgba(255,255,255,.06); --tag-text:#b3b3b3; --explanation-bg:rgba(255,255,255,.04);
+    --choice-bg:rgba(255,255,255,.03); --hover-card:rgba(255,255,255,.07);
+    --c-jokbo:#ffb74d; --c-multi:#a884ff;
+  }
+  [data-theme="light"]{
+    --bg-base:#f7f7f5; --bg-elevated:#fff; --bg-card:#fafafa; --bg-sidebar:#fff;
+    --text-primary:#121212; --text-muted:#555; --text-subdued:#888;
+    --accent:#1aa84b; --accent-hover:#16933f; --accent-soft:rgba(26,168,75,.12);
+    --correct:#1aa84b; --correct-text:#14532d; --wrong:#d63b48; --wrong-text:#991b1b;
+    --wrong-soft:rgba(214,59,72,.1); --warn:#d97706; --warn-soft:rgba(217,119,6,.12);
+    --border:#e2e2e0; --grad-main:linear-gradient(180deg,#ececea 0%,var(--bg-base) 280px);
+    --shadow-card:0 2px 12px rgba(0,0,0,.06); --divider:rgba(0,0,0,.08);
+    --tag-bg:rgba(0,0,0,.05); --tag-text:#4b5563; --explanation-bg:rgba(0,0,0,.03);
+    --choice-bg:rgba(0,0,0,.02); --hover-card:rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;
+    background:var(--bg-base);color:var(--text-primary);-webkit-font-smoothing:antialiased;line-height:1.5}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  .app{display:grid;grid-template-columns:260px 1fr;grid-template-rows:1fr 86px;height:100vh;gap:8px;padding:8px}
+  .menu-btn{display:none;position:fixed;top:12px;left:12px;width:44px;height:44px;border-radius:10px;
+    background:var(--bg-elevated);border:1px solid var(--border);color:var(--text-primary);font-size:22px;
+    z-index:50;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+  .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99}
+  .sidebar-backdrop.active{display:block}
+  .sidebar{grid-row:1;background:var(--bg-sidebar);border-radius:8px;padding:22px 16px;overflow-y:auto;
+    display:flex;flex-direction:column;gap:20px;border:1px solid var(--border)}
+  .logo{display:flex;align-items:center;gap:10px;padding:0 6px 14px;border-bottom:1px solid var(--border)}
+  .logo-icon{font-size:26px}
+  .logo-text{font-size:17px;font-weight:800;letter-spacing:-.3px}
+  .logo-sub{font-size:11px;color:var(--text-subdued);margin-top:2px}
+  .user-info{display:flex;align-items:center;gap:8px;padding:8px 10px;background:rgba(128,128,128,.06);border-radius:8px}
+  .user-name{flex:1;font-size:12.5px;font-weight:700}
+  .icon-btn{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    color:var(--text-muted);font-size:16px;transition:.15s;background:rgba(128,128,128,.08)}
+  .icon-btn:hover{color:var(--text-primary);background:rgba(128,128,128,.16)}
+  .sidebar-section h3{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-subdued);
+    padding:0 8px 8px;font-weight:700}
+  .nav-list{display:flex;flex-direction:column;gap:2px}
+  .nav-item{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-radius:6px;
+    font-weight:600;font-size:14px;color:var(--text-muted);transition:.15s;text-align:left;width:100%}
+  .nav-item:hover{color:var(--text-primary);background:var(--hover-card)}
+  .nav-item.active{color:var(--text-primary);background:var(--accent-soft)}
+  .nav-item .count{font-size:12px;color:var(--text-subdued);background:var(--tag-bg);padding:2px 8px;border-radius:10px;font-weight:700}
+  .nav-item.active .count{color:var(--accent);background:var(--accent-soft)}
+  .nav-dot{width:9px;height:9px;border-radius:50%;margin-right:9px;flex:0 0 auto}
+  .stats-card{background:linear-gradient(135deg,var(--accent-soft),rgba(29,185,84,.05));border-radius:8px;padding:14px;margin-top:auto}
+  .stats-card h4{font-size:12px;color:var(--accent);margin-bottom:8px;font-weight:700}
+  .stats-row{display:flex;justify-content:space-between;font-size:13px;padding:3px 0;color:var(--text-muted)}
+  .stats-row span:last-child{color:var(--text-primary);font-weight:700}
+  .reset-btn{width:100%;margin-top:12px;padding:8px;background:var(--wrong-soft);color:var(--wrong);
+    border:1px solid var(--wrong);border-radius:6px;font-size:12px;font-weight:700}
+  .main{grid-row:1;background:var(--grad-main);border-radius:8px;overflow-y:auto;padding:28px 36px 36px;border:1px solid var(--border)}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px}
+  .topbar h1{font-size:22px;font-weight:800;letter-spacing:-.5px}
+  .progress-text{font-size:13px;color:var(--text-muted);font-weight:600;white-space:nowrap}
+  .progress-bar-wrap{height:4px;background:var(--tag-bg);border-radius:999px;overflow:hidden;margin-bottom:26px}
+  .progress-bar{height:100%;background:var(--accent);border-radius:999px;transition:width .4s cubic-bezier(.2,.8,.2,1)}
+  .question-card{background:var(--bg-elevated);border-radius:12px;padding:30px;box-shadow:var(--shadow-card);border:1px solid var(--border)}
+  .question-card.concept{border-color:var(--accent);background:linear-gradient(180deg,var(--accent-soft),var(--bg-elevated) 90px)}
+  .qmeta{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+  .pill{font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700;letter-spacing:.3px;color:#0d1320}
+  .pill-tag{background:var(--tag-bg);color:var(--tag-text);font-weight:600}
+  .pill-multi{background:var(--c-multi);color:#0d1320}
+  .pill-jokbo{background:var(--c-jokbo);color:#0d1320}
+  .pill-freq{background:#f15e6c;color:#fff}
+  .pill-var{background:#a884ff;color:#0d1320}
+  .pill-short{background:#7ee0c0;color:#0d1320}
+  .pill-concept{background:var(--accent);color:#0d1320}
+  .qno{color:var(--text-subdued);font-size:12px;font-weight:700;margin-left:auto}
+  .bm{font-size:16px;margin-left:8px;opacity:.32;transition:.15s;background:none;line-height:1}
+  .bm.on{opacity:1}.bm:hover{opacity:.85;transform:scale(1.12)}
+  .qtext{font-size:17.5px;font-weight:700;line-height:1.45;margin-bottom:18px;white-space:pre-wrap}
+  .concept .qtext{color:var(--accent)}
+  .multi-note{color:var(--c-multi);font-weight:700;font-size:13px;margin:-6px 0 14px}
+  .exams{font-size:12px;color:var(--text-subdued);margin:-8px 0 14px;font-weight:600}
+  .choices{display:flex;flex-direction:column;gap:10px}
+  .choice{display:flex;align-items:flex-start;gap:13px;padding:14px 18px;background:var(--choice-bg);
+    border:1px solid transparent;border-radius:8px;text-align:left;width:100%;transition:.15s;color:var(--text-primary);font-size:15px}
+  .choice:hover:not(.locked){background:var(--hover-card);border-color:var(--border);transform:translateX(4px)}
+  .choice .num{font-weight:800;color:var(--text-muted);min-width:22px;font-size:16px}
+  .choice.sel{border-color:var(--accent);background:var(--accent-soft)}
+  .choice.sel .num{color:var(--accent)}
+  .choice.locked{cursor:default}
+  .choice.correct{background:var(--accent-soft);border-color:var(--accent);color:var(--correct-text)}
+  .choice.correct .num{color:var(--accent)}
+  .choice.wrong{background:var(--wrong-soft);border-color:var(--wrong);color:var(--wrong-text)}
+  .choice.wrong .num{color:var(--wrong)}
+  .choice.miss{border-color:var(--warn);background:var(--warn-soft)}
+  .choice.miss .num{color:var(--warn)}
+  .explanation{margin-top:18px;padding:16px 18px;background:var(--explanation-bg);border-radius:8px;
+    border-left:3px solid var(--accent);font-size:14px;line-height:1.65;color:var(--text-primary);white-space:pre-wrap}
+  .concept .explanation{margin-top:0}
+  .verdict{font-weight:800;margin-bottom:8px;font-size:15px;display:flex;align-items:center;gap:8px}
+  .verdict.correct{color:var(--accent)} .verdict.wrong{color:var(--wrong)}
+  .explanation strong{font-weight:800}
+  .shortans-btn{margin-top:6px;padding:12px;width:100%;background:var(--accent-soft);color:var(--accent);
+    border:1px solid var(--accent);border-radius:8px;font-weight:800;font-size:14px}
+  .selfgrade{display:flex;gap:8px;margin-top:12px}
+  .sg{flex:1;padding:10px;border:1px solid var(--border);background:var(--choice-bg);border-radius:8px;font-weight:700;font-size:13px;color:var(--text-muted)}
+  .sg.o.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  .sg.x.on{background:var(--wrong-soft);border-color:var(--wrong);color:var(--wrong)}
+  .player{grid-row:2;grid-column:1/-1;background:var(--bg-elevated);border-radius:8px;padding:12px 24px;
+    display:flex;align-items:center;gap:16px;box-shadow:var(--shadow-card);border:1px solid var(--border)}
+  .player-info{display:flex;flex-direction:column;min-width:130px}
+  .player-info .now{font-size:13px;font-weight:700}
+  .player-info .meta{font-size:11px;color:var(--text-muted);margin-top:2px}
+  .player-controls{display:flex;gap:8px;flex:1;justify-content:center}
+  .ctrl-btn{padding:10px 18px;background:var(--tag-bg);border-radius:999px;font-size:13px;font-weight:700;
+    transition:.15s;color:var(--text-primary);display:flex;align-items:center;gap:6px}
+  .ctrl-btn:hover{background:var(--hover-card);transform:scale(1.04)}
+  .ctrl-btn:active{transform:scale(.97)}
+  .ctrl-btn.primary{background:var(--accent);color:#000;font-weight:800;padding:10px 24px}
+  .ctrl-btn.primary:hover{background:var(--accent-hover)}
+  .player-extra{font-size:11px;color:var(--text-subdued);min-width:74px;text-align:right;font-weight:600}
+  .empty-card{background:var(--bg-elevated);border-radius:12px;padding:60px 32px;text-align:center;color:var(--text-muted)}
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-thumb{background:rgba(128,128,128,.25);border-radius:999px}
+  @media(max-width:768px){
+    .app{grid-template-columns:1fr;grid-template-rows:1fr 80px;padding:4px}
+    .menu-btn{display:flex}
+    .sidebar{position:fixed;top:8px;bottom:92px;left:8px;width:280px;max-width:calc(100vw - 16px);z-index:100;
+      transform:translateX(calc(-100% - 16px));transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+    .sidebar.open{transform:translateX(0)}
+    .main{padding:60px 16px 20px}
+    .topbar h1{font-size:18px}
+    .question-card{padding:18px 16px}
+    .player{padding:8px 12px;gap:8px}
+    .player-info{min-width:auto;flex:0 0 auto}
+    .player-extra{display:none}
+    .ctrl-btn{padding:9px 14px}
+  }
 </style>
 </head>
 <body>
-<div class="app">
-  <aside class="side" id="side"></aside>
-  <main class="main">
-    <div class="mobtop mobtop"><button class="ham" onclick="toggleSide()">☰</button><span class="mobtit">실험동물의학2 기말</span></div>
-    <div class="top">
-      <div class="tit">실험동물의학2 기말 <span class="sub">최양규 · 족보 9개년 + 개념</span></div>
-      <div class="tools">
-        <input class="search" id="search" placeholder="🔍 병원체·발문 검색 (예: MHV, syncytium)" oninput="render()">
-        <button class="iconb" onclick="toggleTheme()" id="themebtn">🌙</button>
-      </div>
+<div class="app" id="app">
+  <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+  <div class="sidebar-backdrop" id="backdrop" onclick="toggleSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <div class="logo-icon">🐭</div>
+      <div><div class="logo-text">실험동물의학2 퀴즈</div><div class="logo-sub">기말 · 최양규 · 족보 9개년</div></div>
     </div>
-    <div class="wrap" id="list"></div>
-  </main>
+    <div class="user-info">
+      <span class="user-name">족보 314 · 개념 69 · 자작 105</span>
+      <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="테마">🌙</button>
+    </div>
+    <div class="sidebar-section">
+      <h3>카테고리</h3>
+      <nav class="nav-list" id="filterNav"></nav>
+    </div>
+    <div class="stats-card">
+      <h4>📊 진행 상황</h4>
+      <div class="stats-row"><span>정답</span><span id="stCorrect">0</span></div>
+      <div class="stats-row"><span>오답</span><span id="stWrong">0</span></div>
+      <div class="stats-row"><span>푼 문제</span><span><span id="stAns">0</span> / <span id="stTotal">0</span></span></div>
+      <div class="stats-row"><span>정답률</span><span id="stRate">0%</span></div>
+      <button class="reset-btn" onclick="resetAll()">🗑️ 전체 초기화</button>
+    </div>
+  </aside>
+  <main class="main" id="main"></main>
+  <div class="player" id="player"></div>
 </div>
-<div class="scrim" id="scrim" onclick="toggleSide()"></div>
+
 <script src="questions.js"></script>
 <script>
-const PART=[
- ['0_감별종합','🔀 감별·종합'],['1_바이러스','🦠 바이러스'],['2_세균','🧫 세균'],
- ['3_곰팡이기생충','🍄 곰팡이·기생충'],['4_비감염','⚙️ 비감염성'],['5_원숭이BL모델','🐒 원숭이·BL·모델']];
-const PL=Object.fromEntries(PART);
-const CN='①②③④⑤⑥⑦⑧⑨⑩';
-const ST=Object.assign({theme:'dark',filter:'all',bm:{},self:{}},JSON.parse(localStorage.getItem('vetlabV1')||'{}'));
-function save(){localStorage.setItem('vetlabV1',JSON.stringify(ST))}
-document.documentElement.dataset.theme=ST.theme;
-document.getElementById('themebtn').textContent=ST.theme==='dark'?'🌙':'☀️';
-
-function md(s){if(!s)return'';return s
-  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-  .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
-  .replace(/✓/g,'<span style="color:var(--grn);font-weight:800">✓</span>')
-  .replace(/✗/g,'<span style="color:var(--red);font-weight:800">✗</span>')
-  .replace(/\n/g,'<br>');}
-
-const FILT=[
- ['all','전체 보기',q=>true],
- ['0_감별종합','감별·종합',q=>q.part==='0_감별종합'],
- ['1_바이러스','바이러스',q=>q.part==='1_바이러스'],
- ['2_세균','세균',q=>q.part==='2_세균'],
- ['3_곰팡이기생충','곰팡이·기생충',q=>q.part==='3_곰팡이기생충'],
- ['4_비감염','비감염성',q=>q.part==='4_비감염'],
- ['5_원숭이BL모델','원숭이·BL·모델',q=>q.part==='5_원숭이BL모델'],
- ['SEP1','',null],
- ['freq','🔴 빈출(3회+)',q=>(q.freq||0)>=3],
- ['multi','☑️ 모두고르기',q=>q.type==='multi'],
- ['short','✍️ 주관식',q=>q.type==='short'],
- ['variant','🔀 변형주의',q=>q.variant],
- ['jakja','📝 자작예제',q=>q.source==='자작'&&q.origin==='concept'],
- ['bm','🔖 북마크',q=>!!ST.bm[q.id]],
+const QUESTIONS = LABQ;
+const CIRC=['①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩'];
+const PARTLBL={'0_감별종합':'감별·종합','1_바이러스':'바이러스','2_세균':'세균','3_곰팡이기생충':'곰팡이·기생충','4_비감염':'비감염성','5_원숭이BL모델':'원숭이·BL·모델'};
+const PARTCOL={'0_감별종합':'#bdbdbd','1_바이러스':'#ff6b6b','2_세균':'#4fc3f7','3_곰팡이기생충':'#81c784','4_비감염':'#c792ea','5_원숭이BL모델':'#ffb74d'};
+const FILTERS=[
+  ['전체','#1DB954',q=>true],
+  ['감별·종합','#bdbdbd',q=>q.part==='0_감별종합'],
+  ['바이러스','#ff6b6b',q=>q.part==='1_바이러스'],
+  ['세균','#4fc3f7',q=>q.part==='2_세균'],
+  ['곰팡이·기생충','#81c784',q=>q.part==='3_곰팡이기생충'],
+  ['비감염성','#c792ea',q=>q.part==='4_비감염'],
+  ['원숭이·BL·모델','#ffb74d',q=>q.part==='5_원숭이BL모델'],
+  ['족보 기출','var(--c-jokbo)',q=>q.source==='족보'],
+  ['🔴 빈출(3회+)','#f15e6c',q=>(q.freq||0)>=3],
+  ['모두고르시오','var(--c-multi)',q=>q.type==='multi'],
+  ['✍️ 주관식','#7ee0c0',q=>q.type==='short'],
+  ['🔀 변형주의','#a884ff',q=>q.variant===true],
+  ['📖 개념만','#1ED760',q=>q.origin==='summary'],
+  ['🔖 북마크','#ff9e64',q=>!!(ST.bookmarks&&ST.bookmarks[q.id])],
+  ['오답만','#f15e6c',q=>{const s=ST.ans[q.id];return s&&s.checked&&s.correct===false;}],
 ];
+const LS='vetlabQuizV1';
+let ST=load();
+function load(){try{const j=JSON.parse(localStorage.getItem(LS));if(j&&j.ans){if(!j.bookmarks)j.bookmarks={};return j;}}catch(e){}
+  return{ans:{},filter:0,theme:'dark',bookmarks:{}};}
+function save(){localStorage.setItem(LS,JSON.stringify(ST));}
+let order=QUESTIONS.map((q,i)=>i);
+let curId=null;
+const TOTALQ=QUESTIONS.filter(q=>q.type==='single'||q.type==='multi').length;
+function applyTheme(){document.documentElement.setAttribute('data-theme',ST.theme);
+  document.getElementById('themeBtn').textContent=ST.theme==='dark'?'🌙':'☀️';}
+function esc(s){return(s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function md(s){return esc(s).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
+  .replace(/✓/g,'<span style="color:var(--accent);font-weight:800">✓</span>')
+  .replace(/✗/g,'<span style="color:var(--wrong);font-weight:800">✗</span>');}
+function setEq(a,b){a=[...a].sort();b=[...b].sort();return a.length===b.length&&a.every((v,i)=>v===b[i]);}
+function activeList(){const f=FILTERS[ST.filter][2];return order.map(i=>QUESTIONS[i]).filter(f);}
 
-function counts(){const c={};FILT.forEach(f=>{if(f[2])c[f[0]]=LABQ.filter(q=>q.origin!=='summary'&&f[2](q)).length});return c}
-function buildSide(){
- const c=counts();let h=`<div class="brand">실험동물의학2 기말<small>족보 314 · 개념 69 · 자작 105</small></div>`;
- FILT.forEach(f=>{
-   if(f[0].startsWith('SEP')){h+=`<div class="sechd">필터</div>`;return}
-   const on=ST.filter===f[0]?' on':'';
-   h+=`<button class="navb${on}" onclick="setF('${f[0]}')">${f[1]}<span class="n">${c[f[0]]??''}</span></button>`;
- });
- h+=`<div class="sechd">통계</div><div style="padding:4px 11px;font-size:12px;color:var(--tx3);line-height:1.7">
-   북마크 ${Object.keys(ST.bm).length}개<br>총 문항 ${LABQ.filter(q=>q.origin!=='summary').length}</div>`;
- document.getElementById('side').innerHTML=h;
+function renderSidebar(){
+  const nav=document.getElementById('filterNav');nav.innerHTML='';
+  FILTERS.forEach((f,idx)=>{
+    const n=order.map(i=>QUESTIONS[i]).filter(f[2]).length;
+    const b=document.createElement('button');
+    b.className='nav-item'+(ST.filter===idx?' active':'');
+    b.innerHTML=`<span style="display:flex;align-items:center"><span class="nav-dot" style="background:${f[1]}"></span>${f[0]}</span><span class="count">${n}</span>`;
+    b.onclick=()=>{ST.filter=idx;save();curId=null;render();if(window.innerWidth<=768)toggleSidebar(true);};
+    nav.appendChild(b);
+  });
+  const ansd=Object.values(ST.ans).filter(a=>a.checked&&a.correct!==null&&a.correct!==undefined);
+  const cor=ansd.filter(a=>a.correct).length;
+  document.getElementById('stCorrect').textContent=cor;
+  document.getElementById('stWrong').textContent=ansd.length-cor;
+  document.getElementById('stAns').textContent=ansd.length;
+  document.getElementById('stTotal').textContent=TOTALQ;
+  document.getElementById('stRate').textContent=(ansd.length?Math.round(cor/ansd.length*100):0)+'%';
 }
-function setF(f){ST.filter=f;save();buildSide();render();window.scrollTo(0,0);if(innerWidth<=760)closeSide()}
-function toggleTheme(){ST.theme=ST.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=ST.theme;document.getElementById('themebtn').textContent=ST.theme==='dark'?'🌙':'☀️';save()}
-function toggleSide(){document.getElementById('side').classList.toggle('open');document.getElementById('scrim').classList.toggle('open')}
-function closeSide(){document.getElementById('side').classList.remove('open');document.getElementById('scrim').classList.remove('open')}
+function pillsHtml(q){
+  let p=`<span class="pill" style="background:${PARTCOL[q.part]||'#999'};color:#0d1320">${PARTLBL[q.part]||q.part}</span>`;
+  if(q.origin==='summary'){p+=`<span class="pill pill-concept">📖 개념</span>`;}
+  else{
+    if(q.source==='족보')p+=`<span class="pill pill-jokbo">족보 ${esc(q.exam||'')}</span>`;
+    else p+=`<span class="pill pill-tag">자작</span>`;
+    if((q.freq||0)>=2)p+=`<span class="pill pill-freq">🔴 ${q.freq}회</span>`;
+    if(q.type==='multi')p+=`<span class="pill pill-multi">모두 고르시오</span>`;
+    if(q.type==='short')p+=`<span class="pill pill-short">✍️ 주관식</span>`;
+    if(q.variant)p+=`<span class="pill pill-var">🔀 변형</span>`;
+  }
+  if(q.topic)p+=`<span class="pill pill-tag">${esc(q.topic)}</span>`;
+  return p;
+}
+function renderMain(){
+  const list=activeList();const main=document.getElementById('main');
+  if(!list.length){main.innerHTML='<div class="empty-card"><div style="font-size:42px">📭</div>해당 필터 문항 없음</div>';return;}
+  let pos=list.findIndex(q=>q.id===curId);if(pos<0){pos=0;curId=list[0].id;}
+  const q=list[pos];const st=ST.ans[q.id]||{selected:[],checked:false,correct:false};
+  const pct=Math.round((pos+1)/list.length*100);
+  let h=`<div class="topbar"><h1>${FILTERS[ST.filter][0]}</h1><span class="progress-text">${pos+1} / ${list.length} · ${pct}%</span></div>`;
+  h+=`<div class="progress-bar-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>`;
+  const concept=q.origin==='summary';
+  h+=`<div class="question-card${concept?' concept':''}"><div class="qmeta">${pillsHtml(q)}<span class="qno">#${q.id}</span><button class="bm${ST.bookmarks[q.id]?' on':''}" onclick="toggleBm(${q.id})" title="북마크">🔖</button></div>`;
 
-function render(){
- const f=FILT.find(x=>x[0]===ST.filter)[2]||(()=>true);
- const term=(document.getElementById('search').value||'').trim().toLowerCase();
- let qs=LABQ.filter(q=>{
-   if(q.origin==='summary')return false;
-   if(!f(q))return false;
-   if(term){const hay=(q.q+' '+(q.topic||'')+' '+(q.explain||'')).toLowerCase();if(!hay.includes(term))return false}
-   return true;
- });
- // group by part>topic, keep order; summaries attach to topic
- const order={};PART.forEach((p,i)=>order[p[0]]=i);
- const groups={};
- qs.forEach(q=>{const k=q.part+'||'+q.topic;(groups[k]=groups[k]||[]).push(q)});
- let keys=Object.keys(groups).sort((a,b)=>{
-   const qa=groups[a][0],qb=groups[b][0];
-   if(order[qa.part]!==order[qb.part])return order[qa.part]-order[qb.part];
-   const fa=Math.max(...groups[a].map(x=>x.freq||0)),fb=Math.max(...groups[b].map(x=>x.freq||0));
-   return fb-fa;
- });
- let h='';
- if(!qs.length){h=`<div class="empty">해당 문항 없음</div>`}
- keys.forEach(k=>{
-   const items=groups[k];const q0=items[0];
-   const maxf=Math.max(...items.map(x=>x.freq||0));
-   const sumObj=(term?null:LABQ.find(s=>s.origin==='summary'&&s.part===q0.part&&s.topic===q0.topic));
-   h+=`<div class="grp"><div class="grphd"><span class="pl">${PL[q0.part]||q0.part}</span><h2>${q0.topic}</h2>`;
-   if(maxf>=2)h+=`<span class="badge b-freq">🔴 ${maxf}회 출제</span>`;
-   h+=`<span class="badge b-src">${items.length}문항</span></div>`;
-   if(sumObj)h+=cardSum(sumObj);
-   items.forEach(q=>h+=cardQ(q));
-   h+='</div>';
- });
- document.getElementById('list').innerHTML=h;
+  if(concept){
+    h+=`<div class="qtext">📖 ${esc(q.topic)} — 핵심개념</div>`;
+    h+=`<div class="explanation">${md(q.explain)}</div>`;
+  } else if(q.type==='short'){
+    h+=`<div class="qtext">${md(q.q)}</div>`;
+    if(q.exams&&q.exams.length>1)h+=`<div class="exams">출제: ${q.exams.join(' · ')}</div>`;
+    if(st.checked){
+      h+=`<div class="explanation"><div class="verdict correct">✍️ 모범답안</div>${md(q.explain)}</div>`;
+      h+=selfGrade(q,st);
+    }else{
+      h+=`<button class="shortans-btn" onclick="reveal(${q.id})">✍️ 모범답안 보기</button>`;
+    }
+  } else {
+    h+=`<div class="qtext">${md(q.q)}</div>`;
+    if(q.type==='multi')h+=`<div class="multi-note">⚠️ 정답이 1개 이상일 수 있음 (개수 비공개)</div>`;
+    if(q.exams&&q.exams.length>1)h+=`<div class="exams">출제: ${q.exams.join(' · ')}</div>`;
+    h+=`<div class="choices">`;
+    q.choices.forEach((ch,i)=>{
+      const n=i+1;let cls='choice';const sel=st.selected.includes(n);
+      if(st.checked){cls+=' locked';const isA=q.answer.includes(n);
+        if(isA&&sel)cls+=' correct';else if(!isA&&sel)cls+=' wrong';else if(isA&&!sel)cls+=' miss';}
+      else if(sel)cls+=' sel';
+      h+=`<button class="${cls}" onclick="pick(${q.id},${n})"><span class="num">${CIRC[i]||n}</span><span>${md(ch)}</span></button>`;
+    });
+    h+=`</div>`;
+    if(st.checked){
+      const marks=q.answer.map(a=>CIRC[a-1]).join(' ');
+      h+=`<div class="explanation"><div class="verdict ${st.correct?'correct':'wrong'}">${st.correct?'⭕ 정답':'❌ 오답'} &nbsp;·&nbsp; 정답: ${marks}</div>${md(q.explain)}</div>`;
+    }
+  }
+  h+=`</div>`;
+  main.innerHTML=h;main.scrollTop=0;
 }
-function cardSum(s){
- return `<div class="card sum"><div class="sumtit">📖 ${s.topic} — 핵심개념</div><div class="sumbody">${md(s.explain)}</div></div>`;
+function selfGrade(q,st){
+  const s=st.self;
+  return `<div class="selfgrade"><button class="sg o${s==='o'?' on':''}" onclick="grade(${q.id},'o')">⭕ 맞췄음</button><button class="sg x${s==='x'?' on':''}" onclick="grade(${q.id},'x')">❌ 틀렸음</button></div>`;
 }
-function bmBtn(q){return `<button class="bm${ST.bm[q.id]?' on':''}" onclick="toggleBm(${q.id},event)">${ST.bm[q.id]?'🔖':'🏷️'}</button>`}
-function metaRow(q){
- let h='<div class="qmeta">';
- h+=`<span class="badge ${q.source==='족보'?'b-src':'b-multi'}">${q.source==='족보'?'족보':'자작'}</span>`;
- if((q.freq||0)>=2)h+=`<span class="badge b-freq">${q.freq}회</span>`;
- if(q.type==='multi')h+=`<span class="badge b-multi">모두고르기</span>`;
- if(q.type==='short')h+=`<span class="badge b-self">주관식</span>`;
- if(q.variant)h+=`<span class="badge b-var">🔀변형</span>`;
- if(q.exam)h+=`<span class="exam">${q.exam}${q.exams&&q.exams.length>1?' 외 '+(q.exams.length-1):''}</span>`;
- h+=bmBtn(q)+'</div>';
- return h;
+function renderPlayer(){
+  const list=activeList();const p=document.getElementById('player');
+  if(!list.length){p.innerHTML='';return;}
+  let pos=list.findIndex(q=>q.id===curId);if(pos<0)pos=0;
+  const q=list[pos];const st=ST.ans[q.id]||{checked:false};
+  const pct=Math.round((pos+1)/list.length*100);
+  let mid='';
+  if(q.origin==='summary'){mid='';}
+  else if(q.type==='short'){mid=st.checked?`<button class="ctrl-btn" onclick="retry(${q.id})">↺ 다시</button>`:`<button class="ctrl-btn primary" onclick="reveal(${q.id})">✍️ 답 보기</button>`;}
+  else if(q.type==='multi'){mid=st.checked?`<button class="ctrl-btn" onclick="retry(${q.id})">↺ 다시</button>`:`<button class="ctrl-btn primary" onclick="check(${q.id})">✓ 정답 확인</button>`;}
+  else {mid=st.checked?`<button class="ctrl-btn" onclick="retry(${q.id})">↺ 다시</button>`:'';}
+  p.innerHTML=`<div class="player-info"><div class="now">${PARTLBL[q.part]||q.part}</div><div class="meta">${pos+1} / ${list.length}</div></div>
+    <div class="player-controls"><button class="ctrl-btn" onclick="move(-1)">← 이전</button>${mid}<button class="ctrl-btn" onclick="move(1)">다음 →</button></div>
+    <div class="player-extra">${pct}% 진행</div>`;
 }
-function cardQ(q){
- const id='q'+q.id;
- let h=`<div class="card" id="${id}">`+metaRow(q);
- h+=`<div class="qx">${md(q.q)}</div>`;
- if(q.type==='short'){
-   h+=`<button class="showbtn" onclick="showExp('${id}')">정답·해설 보기</button>`;
-   h+=`<div class="exp" id="${id}_e">${md(q.explain)}</div>`;
-   h+=selfGrade(q);
- }else{
-   q.choices.forEach((c,i)=>{
-     h+=`<button class="ch" id="${id}_c${i+1}" onclick="pick(${q.id},${i+1})"><span class="cn">${CN[i]}</span>${md(c)}</button>`;
-   });
-   h+=`<div class="exp" id="${id}_e"><span class="ans">정답: ${q.answer.map(a=>CN[a-1]).join(', ')}</span><br>${md(q.explain)}</div>`;
-   h+=selfGrade(q);
- }
- h+='</div>';
- return h;
-}
-function selfGrade(q){
- const s=ST.self[q.id];
- return `<div class="selfgrade"><button class="sg o${s==='o'?' on':''}" onclick="grade(${q.id},'o')">⭕ 맞음</button><button class="sg x${s==='x'?' on':''}" onclick="grade(${q.id},'x')">❌ 틀림</button></div>`;
-}
-const QMAP={};LABQ.forEach(q=>QMAP[q.id]=q);
-function pick(id,n){
- const q=QMAP[id];const idp='q'+id;
- const correct=q.answer.includes(n);
- // reveal all
- q.choices.forEach((c,i)=>{
-   const el=document.getElementById(idp+'_c'+(i+1));el.classList.remove('dim');
-   if(q.answer.includes(i+1))el.classList.add('correct');
-   else el.classList.add('dim');
- });
- if(!correct)document.getElementById(idp+'_c'+n).classList.add('wrong');
- document.getElementById(idp+'_e').classList.add('show');
-}
-function showExp(idp){document.getElementById(idp+'_e').classList.add('show')}
-function toggleBm(id,e){e&&e.stopPropagation();if(ST.bm[id])delete ST.bm[id];else ST.bm[id]=1;save();render();buildSide()}
-function grade(id,v){if(ST.self[id]===v)delete ST.self[id];else ST.self[id]=v;save();render()}
-buildSide();render();
+function render(){applyTheme();renderSidebar();renderMain();renderPlayer();}
+window.pick=function(id,n){const q=QUESTIONS.find(x=>x.id===id);let st=ST.ans[id]||{selected:[],checked:false,correct:false};
+  if(st.checked)return;
+  if(q.type==='single'){st.selected=[n];st.checked=true;st.correct=setEq(st.selected,q.answer);}
+  else st.selected=st.selected.includes(n)?st.selected.filter(x=>x!==n):[...st.selected,n];
+  ST.ans[id]=st;save();render();};
+window.check=function(id){const q=QUESTIONS.find(x=>x.id===id);let st=ST.ans[id]||{selected:[],checked:false,correct:false};
+  if(!st.selected||!st.selected.length){alert('선지를 선택하세요');return;}
+  st.checked=true;st.correct=setEq(st.selected,q.answer);ST.ans[id]=st;save();render();};
+window.reveal=function(id){let st=ST.ans[id]||{selected:[],checked:false};st.checked=true;st.correct=null;ST.ans[id]=st;save();render();};
+window.grade=function(id,v){let st=ST.ans[id];if(!st)return;st.correct=(st.self===v)?null:(v==='o');st.self=(st.self===v)?null:v;ST.ans[id]=st;save();render();};
+window.retry=function(id){ST.ans[id]={selected:[],checked:false,correct:false};save();render();};
+window.move=function(d){const list=activeList();if(!list.length)return;let pos=list.findIndex(q=>q.id===curId);if(pos<0)pos=0;
+  pos=Math.max(0,Math.min(list.length-1,pos+d));curId=list[pos].id;render();};
+window.toggleTheme=function(){ST.theme=ST.theme==='dark'?'light':'dark';save();applyTheme();};
+window.toggleSidebar=function(force){const sb=document.getElementById('sidebar'),bd=document.getElementById('backdrop');
+  const open=force===true?false:!sb.classList.contains('open');
+  sb.classList.toggle('open',open);bd.classList.toggle('active',open);};
+window.toggleBm=function(id){if(ST.bookmarks[id])delete ST.bookmarks[id];else ST.bookmarks[id]=true;save();render();};
+window.resetAll=function(){if(!confirm('모든 답·점수를 초기화할까요? (북마크는 유지)'))return;
+  ST={ans:{},filter:0,theme:ST.theme,bookmarks:ST.bookmarks};order=QUESTIONS.map((q,i)=>i);save();curId=null;render();};
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1);});
+render();
 </script>
 </body>
 </html>
