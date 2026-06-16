@@ -304,6 +304,7 @@ function pillsHtml(q){
   else if(q.origin==='jokbo')p+=`<span class="pill pill-jokbo">📕 족보 ${esc(q.exam||'')}</span>`;
   else p+=`<span class="pill pill-jakja">📝 자작</span>`;
   if(q.origin!=='summary'){
+    if(q.flag)p+=`<span class="pill" style="background:#ff5c5c;color:#fff">⚠️ 오류주의</span>`;
     if((q.freq||0)>=2&&q.origin!=='core')p+=`<span class="pill pill-freq">🔴 ${q.freq}회</span>`;
     if(q.type==='multi')p+=`<span class="pill pill-multi">모두 고르시오</span>`;
     if(q.type==='short')p+=`<span class="pill pill-short">✍️ 주관식</span>`;
