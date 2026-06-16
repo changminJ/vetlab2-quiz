@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<title>🐭 실험동물의학2 기말 퀴즈</title>
+<title>🔬 실험동물의학실습 기말 퀴즈</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Cache-Control" content="no-cache" />
 <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
     --shadow-card:0 4px 20px rgba(0,0,0,.3);
     --tag-bg:rgba(255,255,255,.06); --tag-text:#b3b3b3; --explanation-bg:rgba(255,255,255,.04);
     --choice-bg:rgba(255,255,255,.03); --hover-card:rgba(255,255,255,.07);
-    --c-jokbo:#ffb74d; --c-multi:#a884ff;
+    --c-jokbo:#ffb74d; --c-multi:#a884ff; --c-2024:#bf7bff;
   }
   [data-theme="light"]{
     --bg-base:#f7f7f5; --bg-elevated:#fff; --bg-card:#fafafa; --bg-sidebar:#fff;
@@ -51,6 +51,8 @@
   .icon-btn{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;
     color:var(--text-muted);font-size:16px;transition:.15s;background:rgba(128,128,128,.08)}
   .icon-btn:hover{color:var(--text-primary);background:rgba(128,128,128,.16)}
+  .xlink{display:block;text-align:center;padding:9px;background:var(--accent-soft);color:var(--accent);
+    border:1px solid var(--accent);border-radius:8px;font-size:12.5px;font-weight:800;text-decoration:none}
   .sidebar-section h3{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-subdued);
     padding:0 8px 8px;font-weight:700}
   .nav-list{display:flex;flex-direction:column;gap:2px}
@@ -74,17 +76,14 @@
   .topbar h1 .cnt{font-size:13px;color:var(--text-muted);font-weight:600}
   .search{margin-top:11px;width:100%;background:var(--choice-bg);border:1px solid var(--border);border-radius:10px;
     padding:10px 14px;color:var(--text-primary);font-size:14px;font-family:inherit}
-  /* topic 바로가기 칩 */
   .topicnav{display:flex;gap:7px;overflow-x:auto;padding:11px 0 4px;margin-top:4px;scrollbar-width:thin}
   .topicnav::-webkit-scrollbar{height:5px}
   .tchip{flex:0 0 auto;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;
     background:var(--choice-bg);border:1.5px solid var(--border);color:var(--text-primary);font-size:12.5px;font-weight:700;white-space:nowrap;transition:.12s;cursor:pointer}
   .tchip:hover{border-color:var(--cc);background:var(--hover-card);transform:translateY(-1px)}
   .tchip .tc{font-size:10.5px;color:var(--text-subdued);font-weight:800;background:var(--tag-bg);padding:1px 6px;border-radius:8px}
-  /* group */
   .grp{margin:20px 0 6px;scroll-margin-top:132px}
-  .grphd{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;
-    padding-bottom:7px;border-bottom:1px solid var(--border)}
+  .grphd{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;padding-bottom:7px;border-bottom:1px solid var(--border)}
   .grphd .pl{font-size:11px;font-weight:800}
   .grphd h2{font-size:16.5px;font-weight:800;margin:0;letter-spacing:-.3px}
   .pill{font-size:11px;padding:3px 9px;border-radius:999px;font-weight:700;letter-spacing:.3px}
@@ -95,24 +94,22 @@
   .pill-freq{background:#f15e6c;color:#fff}
   .pill-var{background:#a884ff;color:#0d1320}
   .pill-short{background:#7ee0c0;color:#0d1320}
+  .pill-2024{background:var(--c-2024);color:#fff}
   .pill-concept{background:var(--accent);color:#0d1320}
-  /* card */
-  .qcard{background:var(--bg-elevated);border-radius:11px;padding:17px 19px;margin:10px 0;
-    box-shadow:var(--shadow-card);border:1px solid var(--border);border-left-width:4px}
+  .qcard{background:var(--bg-elevated);border-radius:11px;padding:17px 19px;margin:10px 0;box-shadow:var(--shadow-card);border:1px solid var(--border);border-left-width:4px}
   .qcard.src-jokbo{border-left-color:var(--c-jokbo)}
   .qcard.src-jakja{border-left-color:var(--accent)}
   .qcard.src-concept{border-left-color:var(--accent);background:linear-gradient(180deg,var(--accent-soft),var(--bg-elevated) 70px)}
+  .qcard.hl2024{box-shadow:0 0 0 1.5px var(--c-2024),var(--shadow-card)}
   .qmeta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:11px}
   .qno{color:var(--text-subdued);font-size:11px;font-weight:700;margin-left:auto}
   .bm{font-size:16px;margin-left:6px;opacity:.32;transition:.15s;background:none;line-height:1}
   .bm.on{opacity:1}.bm:hover{opacity:.85;transform:scale(1.12)}
   .qtext{font-size:15.5px;font-weight:700;line-height:1.5;margin-bottom:13px;white-space:pre-wrap}
   .concept-title{font-size:16px;font-weight:800;color:var(--accent);margin-bottom:9px}
-  .multi-note{color:var(--c-multi);font-weight:700;font-size:12.5px;margin:-4px 0 11px}
   .exams{font-size:11.5px;color:var(--text-subdued);margin:-4px 0 11px;font-weight:600}
   .choices{display:flex;flex-direction:column;gap:8px}
-  .choice{display:flex;align-items:flex-start;gap:11px;padding:11px 15px;background:var(--choice-bg);
-    border:1px solid transparent;border-radius:8px;text-align:left;width:100%;transition:.12s;color:var(--text-primary);font-size:14.5px}
+  .choice{display:flex;align-items:flex-start;gap:11px;padding:11px 15px;background:var(--choice-bg);border:1px solid transparent;border-radius:8px;text-align:left;width:100%;transition:.12s;color:var(--text-primary);font-size:14.5px}
   .choice:hover:not(.locked){background:var(--hover-card);border-color:var(--border)}
   .choice .num{font-weight:800;color:var(--text-muted);min-width:20px;font-size:15px}
   .choice.sel{border-color:var(--accent);background:var(--accent-soft)}
@@ -126,10 +123,8 @@
   .choice.miss .num{color:var(--warn)}
   .checkbtn{margin-top:9px;padding:9px 16px;background:var(--accent);color:#000;border-radius:999px;font-weight:800;font-size:13px}
   .checkbtn.ghost{background:var(--tag-bg);color:var(--text-primary)}
-  .shortans-btn{margin-top:2px;padding:11px;width:100%;background:var(--accent-soft);color:var(--accent);
-    border:1px solid var(--accent);border-radius:8px;font-weight:800;font-size:13.5px}
-  .explanation{margin-top:13px;padding:14px 16px;background:var(--explanation-bg);border-radius:8px;
-    border-left:3px solid var(--accent);font-size:13.5px;line-height:1.62;color:var(--text-primary);white-space:pre-wrap}
+  .shortans-btn{margin-top:2px;padding:11px;width:100%;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent);border-radius:8px;font-weight:800;font-size:13.5px}
+  .explanation{margin-top:13px;padding:14px 16px;background:var(--explanation-bg);border-radius:8px;border-left:3px solid var(--accent);font-size:13.5px;line-height:1.62;color:var(--text-primary);white-space:pre-wrap}
   .verdict{font-weight:800;margin-bottom:7px;font-size:14px;display:flex;align-items:center;gap:7px}
   .verdict.correct{color:var(--accent)} .verdict.wrong{color:var(--wrong)}
   .explanation strong{font-weight:800}
@@ -143,8 +138,7 @@
   @media(max-width:768px){
     .app{grid-template-columns:1fr;padding:4px}
     .menu-btn{display:flex}
-    .sidebar{position:fixed;top:8px;bottom:8px;left:8px;width:280px;max-width:calc(100vw - 16px);z-index:100;
-      transform:translateX(calc(-100% - 16px));transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+    .sidebar{position:fixed;top:8px;bottom:8px;left:8px;width:280px;max-width:calc(100vw - 16px);z-index:100;transform:translateX(calc(-100% - 16px));transition:transform .25s cubic-bezier(.2,.8,.2,1)}
     .sidebar.open{transform:translateX(0)}
     .main{padding:56px 14px 40px}
     .topbar{margin:-56px -14px 8px;padding:14px 16px 10px;top:-56px}
@@ -159,16 +153,16 @@
   <div class="sidebar-backdrop" id="backdrop" onclick="toggleSidebar()"></div>
   <aside class="sidebar" id="sidebar">
     <div class="logo">
-      <div class="logo-icon">🐭</div>
-      <div><div class="logo-text">실험동물의학2 퀴즈</div><div class="logo-sub">기말 · 최양규 · 족보 9개년</div></div>
+      <div class="logo-icon">🔬</div>
+      <div><div class="logo-text">실동실습 퀴즈</div><div class="logo-sub">기말 · 족보 2016~2025</div></div>
     </div>
     <div class="user-info">
-      <span class="user-name">족보 314 · 개념 69 · 자작 105</span>
+      <span class="user-name">족보 33 · 개념 14 · 자작 19</span>
       <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="테마">🌙</button>
     </div>
-    <a href="lab.html" style="display:block;text-align:center;padding:9px;background:rgba(124,224,192,.15);color:#34c79a;border:1px solid #34c79a;border-radius:8px;font-size:12.5px;font-weight:800;text-decoration:none">🔬 실습 퀴즈로 이동 →</a>
+    <a class="xlink" href="index.html">🐭 이론 퀴즈로 이동 →</a>
     <div class="sidebar-section">
-      <h3>카테고리</h3>
+      <h3>개념 카테고리</h3>
       <nav class="nav-list" id="filterNav"></nav>
     </div>
     <div class="stats-card">
@@ -183,46 +177,46 @@
   <main class="main" id="main"></main>
 </div>
 
-<script src="questions.js"></script>
+<script src="lab.js"></script>
 <script>
-const QUESTIONS = LABQ;
+const QUESTIONS = LABLAB;
 const CIRC=['①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩'];
-const PARTORDER=['0_감별종합','1_바이러스','2_세균','3_곰팡이기생충','4_비감염','5_원숭이BL모델'];
-const PARTLBL={'0_감별종합':'감별·종합','1_바이러스':'바이러스','2_세균':'세균','3_곰팡이기생충':'곰팡이·기생충','4_비감염':'비감염성','5_원숭이BL모델':'원숭이·BL·모델'};
-const PARTCOL={'0_감별종합':'#bdbdbd','1_바이러스':'#ff6b6b','2_세균':'#4fc3f7','3_곰팡이기생충':'#81c784','4_비감염':'#c792ea','5_원숭이BL모델':'#ffb74d'};
-const NOSUM=q=>q.origin!=='summary';
+const PARTORDER=['기초','소독멸균','마취채혈부검','보정투여계산','유전모니터링','품질검정','안락사','장봉합'];
+const PARTLBL={'기초':'기초·종특성','소독멸균':'소독·멸균','마취채혈부검':'마취·채혈·부검','보정투여계산':'보정·투여·계산','유전모니터링':'유전 모니터링','품질검정':'품질검정','안락사':'안락사','장봉합':'장봉합'};
+const PARTCOL={'기초':'#ff6b6b','소독멸균':'#4fc3f7','마취채혈부검':'#c792ea','보정투여계산':'#ffb74d','유전모니터링':'#81c784','품질검정':'#5ca8ff','안락사':'#f47fb0','장봉합':'#a884ff'};
 const FILTERS=[
   ['전체','#1DB954',q=>true],
-  ['감별·종합','#bdbdbd',q=>q.part==='0_감별종합'],
-  ['바이러스','#ff6b6b',q=>q.part==='1_바이러스'],
-  ['세균','#4fc3f7',q=>q.part==='2_세균'],
-  ['곰팡이·기생충','#81c784',q=>q.part==='3_곰팡이기생충'],
-  ['비감염성','#c792ea',q=>q.part==='4_비감염'],
-  ['원숭이·BL·모델','#ffb74d',q=>q.part==='5_원숭이BL모델'],
+  ['기초·종특성','#ff6b6b',q=>q.part==='기초'],
+  ['소독·멸균','#4fc3f7',q=>q.part==='소독멸균'],
+  ['마취·채혈·부검','#c792ea',q=>q.part==='마취채혈부검'],
+  ['보정·투여·계산','#ffb74d',q=>q.part==='보정투여계산'],
+  ['유전 모니터링','#81c784',q=>q.part==='유전모니터링'],
+  ['품질검정','#5ca8ff',q=>q.part==='품질검정'],
+  ['안락사','#f47fb0',q=>q.part==='안락사'],
+  ['장봉합','#a884ff',q=>q.part==='장봉합'],
   ['📕 족보 기출','var(--c-jokbo)',q=>q.origin==='jokbo'],
   ['📝 자작 문제','#1ED760',q=>q.origin==='concept'],
-  ['🔴 빈출(3회+)','#f15e6c',q=>(q.freq||0)>=3],
-  ['☑️ 모두고르시오','var(--c-multi)',q=>q.type==='multi'],
-  ['✍️ 주관식','#7ee0c0',q=>q.type==='short'&&NOSUM(q)],
-  ['🔀 변형주의','#a884ff',q=>q.variant===true],
+  ['🟣 2024 기출','#bf7bff',q=>q.hl2024===true],
+  ['🔴 빈출(2회+)','#f15e6c',q=>(q.freq||0)>=2],
+  ['⭕ OX 문제','#7ee0c0',q=>q.type==='ox'],
+  ['✍️ 주관식','#ffb74d',q=>['short','calc','essay'].includes(q.type)],
   ['📖 개념만','#1ED760',q=>q.origin==='summary'],
   ['🔖 북마크','#ff9e64',q=>!!(ST.bookmarks&&ST.bookmarks[q.id])],
   ['❌ 오답만','#f15e6c',q=>{const s=ST.ans[q.id];return s&&s.checked&&s.correct===false;}],
 ];
-const LS='vetlabQuizV2';
+const NOSUM=q=>q.origin!=='summary';
+const LS='vetlabPracV1';
 let ST=load();
 function load(){try{const j=JSON.parse(localStorage.getItem(LS));if(j&&j.ans){if(!j.bookmarks)j.bookmarks={};return j;}}catch(e){}
   return{ans:{},filter:0,theme:'dark',bookmarks:{}};}
 function save(){localStorage.setItem(LS,JSON.stringify(ST));}
-const TOTALQ=QUESTIONS.filter(q=>q.type==='single'||q.type==='multi').length;
+const TOTALQ=QUESTIONS.filter(q=>['ox','single','multi'].includes(q.type)).length;
 const QMAP={};QUESTIONS.forEach(q=>QMAP[q.id]=q);
-function applyTheme(){document.documentElement.setAttribute('data-theme',ST.theme);
-  document.getElementById('themeBtn').textContent=ST.theme==='dark'?'🌙':'☀️';}
+function applyTheme(){document.documentElement.setAttribute('data-theme',ST.theme);document.getElementById('themeBtn').textContent=ST.theme==='dark'?'🌙':'☀️';}
 function esc(s){return(s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function md(s){return esc(s).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
-  .replace(/✓/g,'<span style="color:var(--accent);font-weight:800">✓</span>')
-  .replace(/✗/g,'<span style="color:var(--wrong);font-weight:800">✗</span>');}
+function md(s){return esc(s).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/✓/g,'<span style="color:var(--accent);font-weight:800">✓</span>').replace(/✗/g,'<span style="color:var(--wrong);font-weight:800">✗</span>');}
 function setEq(a,b){a=[...a].sort();b=[...b].sort();return a.length===b.length&&a.every((v,i)=>v===b[i]);}
+const TLBL={ox:'⭕ OX',short:'✍️ 단답',calc:'🧮 계산',essay:'📝 서술',single:'객관식',multi:'모두고르기'};
 
 function renderSidebar(){
   const nav=document.getElementById('filterNav');nav.innerHTML='';
@@ -248,9 +242,9 @@ function pillsHtml(q){
   else if(q.origin==='jokbo')p+=`<span class="pill pill-jokbo">📕 족보 ${esc(q.exam||'')}</span>`;
   else p+=`<span class="pill pill-jakja">📝 자작</span>`;
   if(q.origin!=='summary'){
+    if(q.hl2024)p+=`<span class="pill pill-2024">🟣 2024기출</span>`;
     if((q.freq||0)>=2)p+=`<span class="pill pill-freq">🔴 ${q.freq}회</span>`;
-    if(q.type==='multi')p+=`<span class="pill pill-multi">모두 고르시오</span>`;
-    if(q.type==='short')p+=`<span class="pill pill-short">✍️ 주관식</span>`;
+    if(TLBL[q.type]&&q.type!=='single')p+=`<span class="pill pill-short">${TLBL[q.type]}</span>`;
     if(q.variant)p+=`<span class="pill pill-var">🔀 변형</span>`;
   }
   return p;
@@ -258,72 +252,57 @@ function pillsHtml(q){
 function cardHtml(q){
   const st=ST.ans[q.id]||{selected:[],checked:false,correct:false};
   const srcCls=q.origin==='summary'?'src-concept':(q.origin==='jokbo'?'src-jokbo':'src-jakja');
-  let h=`<div class="qcard ${srcCls}"><div class="qmeta">${pillsHtml(q)}<span class="qno">#${q.id}</span><button class="bm${ST.bookmarks[q.id]?' on':''}" onclick="toggleBm(${q.id})">🔖</button></div>`;
+  let h=`<div class="qcard ${srcCls}${q.hl2024?' hl2024':''}"><div class="qmeta">${pillsHtml(q)}<span class="qno">#${q.id}</span><button class="bm${ST.bookmarks[q.id]?' on':''}" onclick="toggleBm(${q.id})">🔖</button></div>`;
   if(q.origin==='summary'){
     h+=`<div class="concept-title">📖 ${esc(q.topic)} — 핵심개념</div><div class="explanation" style="margin-top:0">${md(q.explain)}</div>`;
     return h+`</div>`;
   }
   h+=`<div class="qtext">${md(q.q)}</div>`;
   if(q.exams&&q.exams.length>1)h+=`<div class="exams">출제: ${q.exams.join(' · ')}</div>`;
-  if(q.type==='short'){
-    if(st.checked){h+=`<div class="explanation"><div class="verdict correct">✍️ 모범답안</div>${md(q.explain)}</div>`+selfGrade(q,st);}
-    else h+=`<button class="shortans-btn" onclick="reveal(${q.id})">✍️ 모범답안 보기</button>`;
+  if(['short','calc','essay'].includes(q.type)){
+    if(st.checked){h+=`<div class="explanation"><div class="verdict correct">${TLBL[q.type]} 모범답안</div>${md(q.explain)}</div>`+selfGrade(q,st);}
+    else h+=`<button class="shortans-btn" onclick="reveal(${q.id})">${TLBL[q.type]} 모범답안 보기</button>`;
     return h+`</div>`;
   }
-  if(q.type==='multi')h+=`<div class="multi-note">⚠️ 정답 1개 이상 (개수 비공개)</div>`;
+  // ox / single / multi
+  if(q.type==='multi')h+=`<div class="exams" style="color:var(--c-multi)">⚠️ 정답 1개 이상</div>`;
   h+=`<div class="choices">`;
   q.choices.forEach((ch,i)=>{
     const n=i+1;let cls='choice';const sel=st.selected.includes(n);
     if(st.checked){cls+=' locked';const isA=q.answer.includes(n);
       if(isA&&sel)cls+=' correct';else if(!isA&&sel)cls+=' wrong';else if(isA&&!sel)cls+=' miss';}
     else if(sel)cls+=' sel';
-    h+=`<button class="${cls}" onclick="pick(${q.id},${n})"><span class="num">${CIRC[i]||n}</span><span>${md(ch)}</span></button>`;
+    h+=`<button class="${cls}" onclick="pick(${q.id},${n})"><span class="num">${q.type==='ox'?'':CIRC[i]||n}</span><span>${md(ch)}</span></button>`;
   });
   h+=`</div>`;
-  if(q.type==='multi'&&!st.checked){
-    h+=`<button class="checkbtn" onclick="check(${q.id})">✓ 정답 확인</button>`;
-  }
+  if(q.type==='multi'&&!st.checked)h+=`<button class="checkbtn" onclick="check(${q.id})">✓ 정답 확인</button>`;
   if(st.checked){
-    const marks=q.answer.map(a=>CIRC[a-1]).join(' ');
+    const marks=q.answer.map(a=>q.type==='ox'?(a===1?'O':'X'):CIRC[a-1]).join(' ');
     h+=`<div class="explanation"><div class="verdict ${st.correct?'correct':'wrong'}">${st.correct?'⭕ 정답':'❌ 오답'} · 정답: ${marks}</div>${md(q.explain)}</div>`;
     h+=`<button class="checkbtn ghost" style="margin-top:9px" onclick="retry(${q.id})">↺ 다시 풀기</button>`;
   }
   return h+`</div>`;
 }
-function selfGrade(q,st){
-  const s=st.self;
-  return `<div class="selfgrade"><button class="sg o${s==='o'?' on':''}" onclick="grade(${q.id},'o')">⭕ 맞췄음</button><button class="sg x${s==='x'?' on':''}" onclick="grade(${q.id},'x')">❌ 틀렸음</button></div>`;
-}
+function selfGrade(q,st){const s=st.self;
+  return `<div class="selfgrade"><button class="sg o${s==='o'?' on':''}" onclick="grade(${q.id},'o')">⭕ 맞췄음</button><button class="sg x${s==='x'?' on':''}" onclick="grade(${q.id},'x')">❌ 틀렸음</button></div>`;}
+let curTerm='';
 function render(){
   applyTheme();renderSidebar();
   const f=FILTERS[ST.filter][2];
-  const list=QUESTIONS.filter(f);
-  const main=document.getElementById('main');
-  let view=list;
-  if(curTerm){const t=curTerm.toLowerCase();view=list.filter(q=>((q.q||'')+(q.topic||'')+(q.explain||'')).toLowerCase().includes(t));}
-  // group by part>topic, preserve order
+  let view=QUESTIONS.filter(f);
+  if(curTerm){const t=curTerm.toLowerCase();view=view.filter(q=>((q.q||'')+(q.topic||'')+(q.explain||'')).toLowerCase().includes(t));}
   const groups={};const gorder=[];
   view.forEach(q=>{const k=q.part+'||'+q.topic;if(!groups[k]){groups[k]=[];gorder.push(k);}groups[k].push(q);});
-  gorder.sort((a,b)=>{
-    const qa=groups[a][0],qb=groups[b][0];
-    const pa=PARTORDER.indexOf(qa.part),pb=PARTORDER.indexOf(qb.part);
-    if(pa!==pb)return pa-pb;
-    const fa=Math.max(...groups[a].map(x=>x.freq||0)),fb=Math.max(...groups[b].map(x=>x.freq||0));
-    return fb-fa;
-  });
-  // topbar + topic 바로가기 칩
+  gorder.sort((a,b)=>{const qa=groups[a][0],qb=groups[b][0];const pa=PARTORDER.indexOf(qa.part),pb=PARTORDER.indexOf(qb.part);
+    if(pa!==pb)return pa-pb;return Math.max(...groups[b].map(x=>x.freq||0))-Math.max(...groups[a].map(x=>x.freq||0));});
   let h=`<div class="topbar"><h1>${FILTERS[ST.filter][0]} <span class="cnt">${view.length}개</span></h1>
-    <input class="search" id="search" placeholder="🔍 병원체·발문 검색 (예: MHV, syncytium, zoonosis)" value="${esc(curTerm)}" oninput="onSearch(this.value)">`;
-  if(gorder.length>1){
-    h+=`<div class="topicnav">`;
-    gorder.forEach((k,gi)=>{
-      const items=groups[k];const q0=items[0];const nq=items.filter(NOSUM).length;const maxf=Math.max(...items.map(x=>x.freq||0));
-      h+=`<button class="tchip" onclick="jumpTo('grp${gi}')" style="--cc:${PARTCOL[q0.part]}">${maxf>=3?'🔴':''}${esc(q0.topic)}<span class="tc">${nq}</span></button>`;
-    });
-    h+=`</div>`;
-  }
+    <input class="search" id="search" placeholder="🔍 검색 (예: 채혈, 모색, SNP, 희석)" value="${esc(curTerm)}" oninput="onSearch(this.value)">`;
+  if(gorder.length>1){h+=`<div class="topicnav">`;
+    gorder.forEach((k,gi)=>{const items=groups[k];const q0=items[0];const nq=items.filter(NOSUM).length;const maxf=Math.max(...items.map(x=>x.freq||0));
+      h+=`<button class="tchip" onclick="jumpTo('grp${gi}')" style="--cc:${PARTCOL[q0.part]}">${maxf>=2?'🔴':''}${esc(q0.topic)}<span class="tc">${nq}</span></button>`;});
+    h+=`</div>`;}
   h+=`</div>`;
-  if(!view.length){h+=`<div class="empty-card"><div style="font-size:42px">📭</div>해당 문항 없음</div>`;main.innerHTML=h;bindSearch();return;}
+  if(!view.length){h+=`<div class="empty-card"><div style="font-size:42px">📭</div>해당 문항 없음</div>`;document.getElementById('main').innerHTML=h;bindSearch();return;}
   gorder.forEach((k,gi)=>{
     const items=groups[k];const q0=items[0];const maxf=Math.max(...items.map(x=>x.freq||0));const nq=items.filter(NOSUM).length;
     const ordered=items.filter(x=>x.origin==='summary').concat(items.filter(x=>x.origin!=='summary'));
@@ -333,17 +312,15 @@ function render(){
     ordered.forEach(q=>h+=cardHtml(q));
     h+=`</div>`;
   });
-  main.innerHTML=h;bindSearch();
+  document.getElementById('main').innerHTML=h;bindSearch();
 }
 window.jumpTo=function(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});};
-let curTerm='';
-function bindSearch(){const el=document.getElementById('search');if(el){el.oninput=e=>onSearch(e.target.value);}}
+function bindSearch(){const el=document.getElementById('search');if(el)el.oninput=e=>onSearch(e.target.value);}
 let searchTimer=null;
-function onSearch(v){curTerm=v;clearTimeout(searchTimer);searchTimer=setTimeout(()=>{const sc=document.getElementById('main').scrollTop;render();
-  const el=document.getElementById('search');if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length);}},180);}
+function onSearch(v){curTerm=v;clearTimeout(searchTimer);searchTimer=setTimeout(()=>{render();const el=document.getElementById('search');if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length);}},180);}
 window.pick=function(id,n){const q=QMAP[id];let st=ST.ans[id]||{selected:[],checked:false,correct:false};
   if(st.checked)return;
-  if(q.type==='single'){st.selected=[n];st.checked=true;st.correct=setEq(st.selected,q.answer);}
+  if(q.type==='single'||q.type==='ox'){st.selected=[n];st.checked=true;st.correct=setEq(st.selected,q.answer);}
   else st.selected=st.selected.includes(n)?st.selected.filter(x=>x!==n):[...st.selected,n];
   ST.ans[id]=st;save();render();};
 window.check=function(id){const q=QMAP[id];let st=ST.ans[id]||{selected:[],checked:false,correct:false};
@@ -354,11 +331,9 @@ window.grade=function(id,v){let st=ST.ans[id];if(!st)return;st.self=(st.self===v
 window.retry=function(id){ST.ans[id]={selected:[],checked:false,correct:false};save();render();};
 window.toggleTheme=function(){ST.theme=ST.theme==='dark'?'light':'dark';save();applyTheme();};
 window.toggleSidebar=function(force){const sb=document.getElementById('sidebar'),bd=document.getElementById('backdrop');
-  const open=force===true?false:!sb.classList.contains('open');
-  sb.classList.toggle('open',open);bd.classList.toggle('active',open);};
+  const open=force===true?false:!sb.classList.contains('open');sb.classList.toggle('open',open);bd.classList.toggle('active',open);};
 window.toggleBm=function(id){if(ST.bookmarks[id])delete ST.bookmarks[id];else ST.bookmarks[id]=true;save();render();};
-window.resetAll=function(){if(!confirm('모든 답·점수를 초기화할까요? (북마크는 유지)'))return;
-  ST={ans:{},filter:ST.filter,theme:ST.theme,bookmarks:ST.bookmarks};save();render();};
+window.resetAll=function(){if(!confirm('모든 답·점수를 초기화할까요? (북마크는 유지)'))return;ST={ans:{},filter:ST.filter,theme:ST.theme,bookmarks:ST.bookmarks};save();render();};
 render();
 </script>
 </body>
