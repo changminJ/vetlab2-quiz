@@ -362,7 +362,8 @@ function render(){
     <input class="search" id="search" placeholder="🔍 검색 (예: 채혈, 모색, SNP, 희석)" value="${esc(curTerm)}" oninput="onSearch(this.value)">`;
   if(gorder.length>1){h+=`<div class="topicnav">`;
     gorder.forEach((k,gi)=>{const items=groups[k];const q0=items[0];const nq=items.filter(NOSUM).length;const maxf=Math.max(...items.map(x=>x.freq||0));
-      h+=`<button class="tchip" onclick="jumpTo('grp${gi}')" style="--cc:${PARTCOL[q0.part]}">${maxf>=2?'🔴':''}${esc(q0.topic)}<span class="tc">${nq}</span></button>`;});
+      const shortT=esc(q0.topic.replace(/\s*[(（].*/,'').replace(/\s*[／/].*/,'').trim());
+      h+=`<button class="tchip" onclick="jumpTo('grp${gi}')" style="--cc:${PARTCOL[q0.part]}">${maxf>=2?'🔴':''}${shortT}<span class="tc">${nq}</span></button>`;});
     h+=`</div>`;}
   h+=`</div>`;
   if(!view.length){h+=`<div class="empty-card"><div style="font-size:42px">📭</div>해당 문항 없음</div>`;document.getElementById('main').innerHTML=h;bindSearch();return;}
