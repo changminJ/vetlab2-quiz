@@ -74,8 +74,15 @@
   .topbar h1 .cnt{font-size:13px;color:var(--text-muted);font-weight:600}
   .search{margin-top:11px;width:100%;background:var(--choice-bg);border:1px solid var(--border);border-radius:10px;
     padding:10px 14px;color:var(--text-primary);font-size:14px;font-family:inherit}
+  /* topic 바로가기 칩 */
+  .topicnav{display:flex;gap:7px;overflow-x:auto;padding:11px 0 4px;margin-top:4px;scrollbar-width:thin}
+  .topicnav::-webkit-scrollbar{height:5px}
+  .tchip{flex:0 0 auto;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;
+    background:var(--choice-bg);border:1.5px solid var(--border);color:var(--text-primary);font-size:12.5px;font-weight:700;white-space:nowrap;transition:.12s;cursor:pointer}
+  .tchip:hover{border-color:var(--cc);background:var(--hover-card);transform:translateY(-1px)}
+  .tchip .tc{font-size:10.5px;color:var(--text-subdued);font-weight:800;background:var(--tag-bg);padding:1px 6px;border-radius:8px}
   /* group */
-  .grp{margin:20px 0 6px}
+  .grp{margin:20px 0 6px;scroll-margin-top:132px}
   .grphd{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;
     padding-bottom:7px;border-bottom:1px solid var(--border)}
   .grphd .pl{font-size:11px;font-weight:800}
@@ -184,13 +191,13 @@ const PARTLBL={'0_감별종합':'감별·종합','1_바이러스':'바이러스'
 const PARTCOL={'0_감별종합':'#bdbdbd','1_바이러스':'#ff6b6b','2_세균':'#4fc3f7','3_곰팡이기생충':'#81c784','4_비감염':'#c792ea','5_원숭이BL모델':'#ffb74d'};
 const NOSUM=q=>q.origin!=='summary';
 const FILTERS=[
-  ['전체','#1DB954',NOSUM],
-  ['감별·종합','#bdbdbd',q=>q.part==='0_감별종합'&&NOSUM(q)],
-  ['바이러스','#ff6b6b',q=>q.part==='1_바이러스'&&NOSUM(q)],
-  ['세균','#4fc3f7',q=>q.part==='2_세균'&&NOSUM(q)],
-  ['곰팡이·기생충','#81c784',q=>q.part==='3_곰팡이기생충'&&NOSUM(q)],
-  ['비감염성','#c792ea',q=>q.part==='4_비감염'&&NOSUM(q)],
-  ['원숭이·BL·모델','#ffb74d',q=>q.part==='5_원숭이BL모델'&&NOSUM(q)],
+  ['전체','#1DB954',q=>true],
+  ['감별·종합','#bdbdbd',q=>q.part==='0_감별종합'],
+  ['바이러스','#ff6b6b',q=>q.part==='1_바이러스'],
+  ['세균','#4fc3f7',q=>q.part==='2_세균'],
+  ['곰팡이·기생충','#81c784',q=>q.part==='3_곰팡이기생충'],
+  ['비감염성','#c792ea',q=>q.part==='4_비감염'],
+  ['원숭이·BL·모델','#ffb74d',q=>q.part==='5_원숭이BL모델'],
   ['📕 족보 기출','var(--c-jokbo)',q=>q.origin==='jokbo'],
   ['📝 자작 문제','#1ED760',q=>q.origin==='concept'],
   ['🔴 빈출(3회+)','#f15e6c',q=>(q.freq||0)>=3],
@@ -291,11 +298,8 @@ function render(){
   const f=FILTERS[ST.filter][2];
   const list=QUESTIONS.filter(f);
   const main=document.getElementById('main');
-  let h=`<div class="topbar"><h1>${FILTERS[ST.filter][0]} <span class="cnt">${list.length}개</span></h1>
-    <input class="search" id="search" placeholder="🔍 병원체·발문 검색 (예: MHV, syncytium, zoonosis)" value="${esc(curTerm)}" oninput="onSearch(this.value)"></div>`;
   let view=list;
   if(curTerm){const t=curTerm.toLowerCase();view=list.filter(q=>((q.q||'')+(q.topic||'')+(q.explain||'')).toLowerCase().includes(t));}
-  if(!view.length){h+=`<div class="empty-card"><div style="font-size:42px">📭</div>해당 문항 없음</div>`;main.innerHTML=h;bindSearch();return;}
   // group by part>topic, preserve order
   const groups={};const gorder=[];
   view.forEach(q=>{const k=q.part+'||'+q.topic;if(!groups[k]){groups[k]=[];gorder.push(k);}groups[k].push(q);});
@@ -306,16 +310,30 @@ function render(){
     const fa=Math.max(...groups[a].map(x=>x.freq||0)),fb=Math.max(...groups[b].map(x=>x.freq||0));
     return fb-fa;
   });
-  gorder.forEach(k=>{
-    const items=groups[k];const q0=items[0];const maxf=Math.max(...items.map(x=>x.freq||0));
-    h+=`<div class="grp"><div class="grphd"><span class="pl" style="color:${PARTCOL[q0.part]}">${PARTLBL[q0.part]}</span><h2>${esc(q0.topic)}</h2>`;
+  // topbar + topic 바로가기 칩
+  let h=`<div class="topbar"><h1>${FILTERS[ST.filter][0]} <span class="cnt">${view.length}개</span></h1>
+    <input class="search" id="search" placeholder="🔍 병원체·발문 검색 (예: MHV, syncytium, zoonosis)" value="${esc(curTerm)}" oninput="onSearch(this.value)">`;
+  if(gorder.length>1){
+    h+=`<div class="topicnav">`;
+    gorder.forEach((k,gi)=>{
+      const items=groups[k];const q0=items[0];const nq=items.filter(NOSUM).length;const maxf=Math.max(...items.map(x=>x.freq||0));
+      h+=`<button class="tchip" onclick="jumpTo('grp${gi}')" style="--cc:${PARTCOL[q0.part]}">${maxf>=3?'🔴':''}${esc(q0.topic)}<span class="tc">${nq}</span></button>`;
+    });
+    h+=`</div>`;
+  }
+  h+=`</div>`;
+  if(!view.length){h+=`<div class="empty-card"><div style="font-size:42px">📭</div>해당 문항 없음</div>`;main.innerHTML=h;bindSearch();return;}
+  gorder.forEach((k,gi)=>{
+    const items=groups[k];const q0=items[0];const maxf=Math.max(...items.map(x=>x.freq||0));const nq=items.filter(NOSUM).length;
+    h+=`<div class="grp" id="grp${gi}"><div class="grphd"><span class="pl" style="color:${PARTCOL[q0.part]}">${PARTLBL[q0.part]}</span><h2>${esc(q0.topic)}</h2>`;
     if(maxf>=2)h+=`<span class="pill pill-freq">🔴 ${maxf}회</span>`;
-    h+=`<span class="pill pill-tag">${items.length}</span></div>`;
+    h+=`<span class="pill pill-tag">${nq}문항</span></div>`;
     items.forEach(q=>h+=cardHtml(q));
     h+=`</div>`;
   });
   main.innerHTML=h;bindSearch();
 }
+window.jumpTo=function(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});};
 let curTerm='';
 function bindSearch(){const el=document.getElementById('search');if(el){el.oninput=e=>onSearch(e.target.value);}}
 let searchTimer=null;
