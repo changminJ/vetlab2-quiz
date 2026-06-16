@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>실험동물의학2 기말 — 족보·개념 퀴즈</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0c; --bg2:#121216; --bg3:#1a1a20; --card:#16161c; --card2:#1e1e26;
+  --tx:#ececed; --tx2:#a8a8b3; --tx3:#6b6b78; --line:#26262e;
+  --acc:#1db954; --acc2:#13833b; --red:#ff5c5c; --redbg:#2a1518; --grn:#2ee06a; --grnbg:#10241a;
+  --blue:#5ca8ff; --gold:#ffce54; --purple:#bf7bff;
+}
+[data-theme="light"]{
+  --bg:#f3f3f5; --bg2:#fff; --bg3:#e9e9ee; --card:#fff; --card2:#f6f6f9;
+  --tx:#1a1a20; --tx2:#55555f; --tx3:#9a9aa5; --line:#e2e2e8;
+  --acc:#1db954; --acc2:#13833b; --red:#d62828; --redbg:#fbe8e8; --grn:#15913f; --grnbg:#e4f6ea;
+  --blue:#1f6fd6; --gold:#c98a00; --purple:#8a3ffb;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);font-family:'Pretendard',system-ui,sans-serif;font-size:15px;line-height:1.55}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+/* sidebar */
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--bg2);border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:4px}
+.brand{font-weight:800;font-size:17px;padding:6px 10px 14px;letter-spacing:-.3px}
+.brand small{display:block;font-size:11px;color:var(--tx3);font-weight:600;margin-top:3px}
+.navb{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:9px;cursor:pointer;color:var(--tx2);font-weight:600;font-size:13.5px;border:none;background:none;width:100%;text-align:left;transition:.12s}
+.navb:hover{background:var(--bg3);color:var(--tx)}
+.navb.on{background:var(--acc);color:#fff}
+.navb .n{margin-left:auto;font-size:11px;opacity:.8;font-weight:700}
+.navb.on .n{opacity:.95}
+.sechd{font-size:10.5px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;padding:14px 11px 5px}
+/* main */
+.main{padding:0 0 80px;max-width:880px;margin:0 auto;width:100%}
+.top{position:sticky;top:0;z-index:20;background:linear-gradient(var(--bg) 60%,transparent);padding:18px 20px 12px;backdrop-filter:blur(6px)}
+.tit{font-size:22px;font-weight:800;letter-spacing:-.4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tit .sub{font-size:12.5px;color:var(--tx2);font-weight:600}
+.tools{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.search{flex:1;min-width:140px;background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:9px 13px;color:var(--tx);font-size:14px;font-family:inherit}
+.iconb{background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:9px 13px;color:var(--tx);cursor:pointer;font-size:14px;font-weight:600}
+.wrap{padding:8px 20px 0}
+/* group */
+.grp{margin:22px 0 8px}
+.grphd{display:flex;align-items:center;gap:9px;margin:0 0 10px;flex-wrap:wrap}
+.grphd .pl{font-size:11px;font-weight:700;color:var(--tx3)}
+.grphd h2{font-size:17px;font-weight:800;margin:0;letter-spacing:-.3px}
+.badge{font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:20px}
+.b-freq{background:var(--redbg);color:var(--red)}
+.b-src{background:var(--bg3);color:var(--tx2)}
+.b-var{background:#2a2140;color:var(--purple)}
+.b-self{background:var(--grnbg);color:var(--grn)}
+.b-multi{background:#1d2740;color:var(--blue)}
+/* card */
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px;margin:9px 0}
+.card.sum{background:var(--card2);border-color:var(--acc2)}
+.qmeta{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.qmeta .exam{font-size:11px;color:var(--tx3);font-weight:600}
+.bm{margin-left:auto;background:none;border:none;cursor:pointer;font-size:17px;opacity:.5;padding:0 2px}
+.bm.on{opacity:1}
+.qx{font-weight:600;font-size:15px;margin-bottom:11px;white-space:pre-wrap}
+.sumtit{font-weight:800;font-size:15.5px;margin-bottom:6px;color:var(--acc)}
+.sumbody{color:var(--tx);font-size:14px}
+.ch{display:block;width:100%;text-align:left;background:var(--bg3);border:1.5px solid var(--line);border-radius:10px;padding:10px 13px;margin:6px 0;color:var(--tx);cursor:pointer;font-size:14px;font-family:inherit;transition:.1s;white-space:pre-wrap}
+.ch:hover{border-color:var(--tx3)}
+.ch .cn{font-weight:800;margin-right:7px;color:var(--tx2)}
+.ch.correct{background:var(--grnbg);border-color:var(--grn);color:var(--tx)}
+.ch.correct .cn{color:var(--grn)}
+.ch.wrong{background:var(--redbg);border-color:var(--red)}
+.ch.wrong .cn{color:var(--red)}
+.ch.dim{opacity:.55}
+.exp{margin-top:11px;padding:12px 13px;background:var(--bg2);border-left:3px solid var(--acc);border-radius:8px;font-size:13.5px;color:var(--tx);white-space:pre-wrap;display:none}
+.exp.show{display:block}
+.exp b,.sumbody b,.qx b{font-weight:800}
+.exp .ans{color:var(--grn);font-weight:800}
+.showbtn{background:var(--bg3);border:1px solid var(--line);border-radius:9px;padding:8px 14px;color:var(--acc);cursor:pointer;font-weight:700;font-size:13px;margin-top:4px}
+.selfgrade{display:flex;gap:7px;margin-top:10px}
+.sg{flex:1;border:1px solid var(--line);background:var(--bg3);border-radius:9px;padding:7px;cursor:pointer;font-weight:700;font-size:13px;color:var(--tx2)}
+.sg.o.on{background:var(--grnbg);border-color:var(--grn);color:var(--grn)}
+.sg.x.on{background:var(--redbg);border-color:var(--red);color:var(--red)}
+.empty{text-align:center;color:var(--tx3);padding:60px 20px;font-size:14px}
+.mobtop{display:none}
+@media(max-width:760px){
+  .app{grid-template-columns:1fr}
+  .side{display:none;position:fixed;z-index:50;width:80%;max-width:300px;box-shadow:0 0 40px #000a}
+  .side.open{display:flex}
+  .mobtop{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:30;background:var(--bg2);padding:11px 15px;border-bottom:1px solid var(--line)}
+  .mobtit{font-weight:800;font-size:15px}
+  .ham{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:7px 11px;font-size:16px;cursor:pointer;color:var(--tx)}
+  .top{padding:12px 15px 8px}.wrap{padding:4px 13px 0}.tit{font-size:18px}
+  .scrim{display:none;position:fixed;inset:0;background:#0008;z-index:40}
+  .scrim.open{display:block}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" id="side"></aside>
+  <main class="main">
+    <div class="mobtop mobtop"><button class="ham" onclick="toggleSide()">☰</button><span class="mobtit">실험동물의학2 기말</span></div>
+    <div class="top">
+      <div class="tit">실험동물의학2 기말 <span class="sub">최양규 · 족보 9개년 + 개념</span></div>
+      <div class="tools">
+        <input class="search" id="search" placeholder="🔍 병원체·발문 검색 (예: MHV, syncytium)" oninput="render()">
+        <button class="iconb" onclick="toggleTheme()" id="themebtn">🌙</button>
+      </div>
+    </div>
+    <div class="wrap" id="list"></div>
+  </main>
+</div>
+<div class="scrim" id="scrim" onclick="toggleSide()"></div>
+<script src="questions.js"></script>
+<script>
+const PART=[
+ ['0_감별종합','🔀 감별·종합'],['1_바이러스','🦠 바이러스'],['2_세균','🧫 세균'],
+ ['3_곰팡이기생충','🍄 곰팡이·기생충'],['4_비감염','⚙️ 비감염성'],['5_원숭이BL모델','🐒 원숭이·BL·모델']];
+const PL=Object.fromEntries(PART);
+const CN='①②③④⑤⑥⑦⑧⑨⑩';
+const ST=Object.assign({theme:'dark',filter:'all',bm:{},self:{}},JSON.parse(localStorage.getItem('vetlabV1')||'{}'));
+function save(){localStorage.setItem('vetlabV1',JSON.stringify(ST))}
+document.documentElement.dataset.theme=ST.theme;
+document.getElementById('themebtn').textContent=ST.theme==='dark'?'🌙':'☀️';
+
+function md(s){if(!s)return'';return s
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+  .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
+  .replace(/✓/g,'<span style="color:var(--grn);font-weight:800">✓</span>')
+  .replace(/✗/g,'<span style="color:var(--red);font-weight:800">✗</span>')
+  .replace(/\n/g,'<br>');}
+
+const FILT=[
+ ['all','전체 보기',q=>true],
+ ['0_감별종합','감별·종합',q=>q.part==='0_감별종합'],
+ ['1_바이러스','바이러스',q=>q.part==='1_바이러스'],
+ ['2_세균','세균',q=>q.part==='2_세균'],
+ ['3_곰팡이기생충','곰팡이·기생충',q=>q.part==='3_곰팡이기생충'],
+ ['4_비감염','비감염성',q=>q.part==='4_비감염'],
+ ['5_원숭이BL모델','원숭이·BL·모델',q=>q.part==='5_원숭이BL모델'],
+ ['SEP1','',null],
+ ['freq','🔴 빈출(3회+)',q=>(q.freq||0)>=3],
+ ['multi','☑️ 모두고르기',q=>q.type==='multi'],
+ ['short','✍️ 주관식',q=>q.type==='short'],
+ ['variant','🔀 변형주의',q=>q.variant],
+ ['jakja','📝 자작예제',q=>q.source==='자작'&&q.origin==='concept'],
+ ['bm','🔖 북마크',q=>!!ST.bm[q.id]],
+];
+
+function counts(){const c={};FILT.forEach(f=>{if(f[2])c[f[0]]=LABQ.filter(q=>q.origin!=='summary'&&f[2](q)).length});return c}
+function buildSide(){
+ const c=counts();let h=`<div class="brand">실험동물의학2 기말<small>족보 314 · 개념 69 · 자작 105</small></div>`;
+ FILT.forEach(f=>{
+   if(f[0].startsWith('SEP')){h+=`<div class="sechd">필터</div>`;return}
+   const on=ST.filter===f[0]?' on':'';
+   h+=`<button class="navb${on}" onclick="setF('${f[0]}')">${f[1]}<span class="n">${c[f[0]]??''}</span></button>`;
+ });
+ h+=`<div class="sechd">통계</div><div style="padding:4px 11px;font-size:12px;color:var(--tx3);line-height:1.7">
+   북마크 ${Object.keys(ST.bm).length}개<br>총 문항 ${LABQ.filter(q=>q.origin!=='summary').length}</div>`;
+ document.getElementById('side').innerHTML=h;
+}
+function setF(f){ST.filter=f;save();buildSide();render();window.scrollTo(0,0);if(innerWidth<=760)closeSide()}
+function toggleTheme(){ST.theme=ST.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=ST.theme;document.getElementById('themebtn').textContent=ST.theme==='dark'?'🌙':'☀️';save()}
+function toggleSide(){document.getElementById('side').classList.toggle('open');document.getElementById('scrim').classList.toggle('open')}
+function closeSide(){document.getElementById('side').classList.remove('open');document.getElementById('scrim').classList.remove('open')}
+
+function render(){
+ const f=FILT.find(x=>x[0]===ST.filter)[2]||(()=>true);
+ const term=(document.getElementById('search').value||'').trim().toLowerCase();
+ let qs=LABQ.filter(q=>{
+   if(q.origin==='summary')return false;
+   if(!f(q))return false;
+   if(term){const hay=(q.q+' '+(q.topic||'')+' '+(q.explain||'')).toLowerCase();if(!hay.includes(term))return false}
+   return true;
+ });
+ // group by part>topic, keep order; summaries attach to topic
+ const order={};PART.forEach((p,i)=>order[p[0]]=i);
+ const groups={};
+ qs.forEach(q=>{const k=q.part+'||'+q.topic;(groups[k]=groups[k]||[]).push(q)});
+ let keys=Object.keys(groups).sort((a,b)=>{
+   const qa=groups[a][0],qb=groups[b][0];
+   if(order[qa.part]!==order[qb.part])return order[qa.part]-order[qb.part];
+   const fa=Math.max(...groups[a].map(x=>x.freq||0)),fb=Math.max(...groups[b].map(x=>x.freq||0));
+   return fb-fa;
+ });
+ let h='';
+ if(!qs.length){h=`<div class="empty">해당 문항 없음</div>`}
+ keys.forEach(k=>{
+   const items=groups[k];const q0=items[0];
+   const maxf=Math.max(...items.map(x=>x.freq||0));
+   const sumObj=(term?null:LABQ.find(s=>s.origin==='summary'&&s.part===q0.part&&s.topic===q0.topic));
+   h+=`<div class="grp"><div class="grphd"><span class="pl">${PL[q0.part]||q0.part}</span><h2>${q0.topic}</h2>`;
+   if(maxf>=2)h+=`<span class="badge b-freq">🔴 ${maxf}회 출제</span>`;
+   h+=`<span class="badge b-src">${items.length}문항</span></div>`;
+   if(sumObj)h+=cardSum(sumObj);
+   items.forEach(q=>h+=cardQ(q));
+   h+='</div>';
+ });
+ document.getElementById('list').innerHTML=h;
+}
+function cardSum(s){
+ return `<div class="card sum"><div class="sumtit">📖 ${s.topic} — 핵심개념</div><div class="sumbody">${md(s.explain)}</div></div>`;
+}
+function bmBtn(q){return `<button class="bm${ST.bm[q.id]?' on':''}" onclick="toggleBm(${q.id},event)">${ST.bm[q.id]?'🔖':'🏷️'}</button>`}
+function metaRow(q){
+ let h='<div class="qmeta">';
+ h+=`<span class="badge ${q.source==='족보'?'b-src':'b-multi'}">${q.source==='족보'?'족보':'자작'}</span>`;
+ if((q.freq||0)>=2)h+=`<span class="badge b-freq">${q.freq}회</span>`;
+ if(q.type==='multi')h+=`<span class="badge b-multi">모두고르기</span>`;
+ if(q.type==='short')h+=`<span class="badge b-self">주관식</span>`;
+ if(q.variant)h+=`<span class="badge b-var">🔀변형</span>`;
+ if(q.exam)h+=`<span class="exam">${q.exam}${q.exams&&q.exams.length>1?' 외 '+(q.exams.length-1):''}</span>`;
+ h+=bmBtn(q)+'</div>';
+ return h;
+}
+function cardQ(q){
+ const id='q'+q.id;
+ let h=`<div class="card" id="${id}">`+metaRow(q);
+ h+=`<div class="qx">${md(q.q)}</div>`;
+ if(q.type==='short'){
+   h+=`<button class="showbtn" onclick="showExp('${id}')">정답·해설 보기</button>`;
+   h+=`<div class="exp" id="${id}_e">${md(q.explain)}</div>`;
+   h+=selfGrade(q);
+ }else{
+   q.choices.forEach((c,i)=>{
+     h+=`<button class="ch" id="${id}_c${i+1}" onclick="pick(${q.id},${i+1})"><span class="cn">${CN[i]}</span>${md(c)}</button>`;
+   });
+   h+=`<div class="exp" id="${id}_e"><span class="ans">정답: ${q.answer.map(a=>CN[a-1]).join(', ')}</span><br>${md(q.explain)}</div>`;
+   h+=selfGrade(q);
+ }
+ h+='</div>';
+ return h;
+}
+function selfGrade(q){
+ const s=ST.self[q.id];
+ return `<div class="selfgrade"><button class="sg o${s==='o'?' on':''}" onclick="grade(${q.id},'o')">⭕ 맞음</button><button class="sg x${s==='x'?' on':''}" onclick="grade(${q.id},'x')">❌ 틀림</button></div>`;
+}
+const QMAP={};LABQ.forEach(q=>QMAP[q.id]=q);
+function pick(id,n){
+ const q=QMAP[id];const idp='q'+id;
+ const correct=q.answer.includes(n);
+ // reveal all
+ q.choices.forEach((c,i)=>{
+   const el=document.getElementById(idp+'_c'+(i+1));el.classList.remove('dim');
+   if(q.answer.includes(i+1))el.classList.add('correct');
+   else el.classList.add('dim');
+ });
+ if(!correct)document.getElementById(idp+'_c'+n).classList.add('wrong');
+ document.getElementById(idp+'_e').classList.add('show');
+}
+function showExp(idp){document.getElementById(idp+'_e').classList.add('show')}
+function toggleBm(id,e){e&&e.stopPropagation();if(ST.bm[id])delete ST.bm[id];else ST.bm[id]=1;save();render();buildSide()}
+function grade(id,v){if(ST.self[id]===v)delete ST.self[id];else ST.self[id]=v;save();render()}
+buildSide();render();
+</script>
+</body>
+</html>
