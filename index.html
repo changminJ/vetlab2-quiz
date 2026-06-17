@@ -222,9 +222,8 @@ const PARTLBL={'0_감별종합':'감별·종합','1_바이러스':'바이러스'
 const PARTCOL={'0_감별종합':'#bdbdbd','1_바이러스':'#ff6b6b','2_세균':'#4fc3f7','3_곰팡이기생충':'#81c784','4_비감염':'#c792ea','5_원숭이BL모델':'#ffb74d'};
 const NOSUM=q=>q.origin!=='summary';
 const FILTERS=[
-  ['🔥 찐핵심 (3회+)','#ff3b30','CORE_HOT'],
-  ['⭐ 핵심 ① 객관식 (통합)','#ff6b6b','CORE_MC'],
-  ['⭐ 핵심 ② 주관식 (통합)','#ff8aae','CORE_SA'],
+  ['🔥 찐핵심 객관식 (주제별 1문항)','#ff3b30','CORE_MC'],
+  ['✍️ 찐핵심 주관식 (주제별 1문항)','#ff8aae','CORE_SA'],
   ['⚡ 전체 ① 객관식','#ffd54f','MC'],
   ['⚡ 전체 ② 주관식','#ffce54','SA'],
   ['전체','#1DB954',q=>true],
@@ -247,11 +246,10 @@ const FILTERS=[
 const LS='vetlabQuizV2';
 let ST=load();
 function load(){try{const j=JSON.parse(localStorage.getItem(LS));if(j&&j.ans){if(!j.bookmarks)j.bookmarks={};if(j.soloIdx==null)j.soloIdx=0;return j;}}catch(e){}
-  return{ans:{},filter:5,theme:'dark',bookmarks:{},soloIdx:0};}
+  return{ans:{},filter:4,theme:'dark',bookmarks:{},soloIdx:0};}
 function isSolo(){return typeof FILTERS[ST.filter][2]==='string';}
 function soloMode(){return FILTERS[ST.filter][2];}
 function soloListFor(m){
-  if(m==='CORE_HOT')return CORE.filter(q=>['ox','single','multi'].includes(q.type)&&(q.freq||0)>=3);
   if(m==='CORE_MC')return CORE.filter(q=>['ox','single','multi'].includes(q.type));
   if(m==='CORE_SA')return CORE.filter(q=>['short','calc','essay'].includes(q.type));
   return QUESTIONS.filter(q=>q.origin==='jokbo'&&(m==='SA'?['short','calc','essay']:['ox','single','multi']).includes(q.type));}
