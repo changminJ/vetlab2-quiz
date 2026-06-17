@@ -35,6 +35,15 @@
     background:var(--bg-base);color:var(--text-primary);-webkit-font-smoothing:antialiased;line-height:1.5}
   button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
   .app{display:grid;grid-template-columns:260px 1fr;height:100vh;gap:8px;padding:8px}
+  .collapse-btn{margin-left:auto;background:var(--tag-bg);border:none;border-radius:6px;width:26px;height:26px;color:var(--text-muted);font-size:13px;cursor:pointer;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+  .collapse-btn:hover{color:var(--text-primary);background:var(--hover-card)}
+  .expand-btn{display:none;position:fixed;top:14px;left:14px;z-index:45;width:38px;height:38px;border-radius:9px;background:var(--bg-elevated);border:1px solid var(--border);color:var(--text-primary);font-size:18px;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+  @media(min-width:769px){
+    .app.side-collapsed{grid-template-columns:0 1fr;gap:0}
+    .app.side-collapsed .sidebar{padding:0;border:none;overflow:hidden;opacity:0;pointer-events:none}
+    .app.side-collapsed .expand-btn{display:flex}
+  }
+  @media(max-width:768px){.collapse-btn{display:none}.expand-btn{display:none!important}}
   .menu-btn{display:none;position:fixed;top:12px;left:12px;width:44px;height:44px;border-radius:10px;
     background:var(--bg-elevated);border:1px solid var(--border);color:var(--text-primary);font-size:22px;
     z-index:50;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15)}
@@ -166,11 +175,13 @@
 <body>
 <div class="app" id="app">
   <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+  <button class="expand-btn" onclick="toggleSideCollapse()" title="메뉴 펼치기">☰</button>
   <div class="sidebar-backdrop" id="backdrop" onclick="toggleSidebar()"></div>
   <aside class="sidebar" id="sidebar">
     <div class="logo">
       <div class="logo-icon">🔬</div>
       <div><div class="logo-text">실동실습 퀴즈</div><div class="logo-sub">기말 · 족보 2016~2025</div></div>
+      <button class="collapse-btn" onclick="toggleSideCollapse()" title="사이드바 접기">◀</button>
     </div>
     <div class="user-info">
       <span class="user-name">족보 33 · 개념 14 · 자작 19</span>
@@ -409,8 +420,10 @@ window.retry=function(id){ST.ans[id]={selected:[],checked:false,correct:false};s
 window.toggleTheme=function(){ST.theme=ST.theme==='dark'?'light':'dark';save();applyTheme();};
 window.toggleSidebar=function(force){const sb=document.getElementById('sidebar'),bd=document.getElementById('backdrop');
   const open=force===true?false:!sb.classList.contains('open');sb.classList.toggle('open',open);bd.classList.toggle('active',open);};
+window.toggleSideCollapse=function(){ST.sideCollapsed=!ST.sideCollapsed;save();document.getElementById('app').classList.toggle('side-collapsed',ST.sideCollapsed);};
 window.toggleBm=function(id){if(ST.bookmarks[id])delete ST.bookmarks[id];else ST.bookmarks[id]=true;save();render();};
 window.resetAll=function(){if(!confirm('모든 답·점수를 초기화할까요? (북마크는 유지)'))return;ST={ans:{},filter:ST.filter,theme:ST.theme,bookmarks:ST.bookmarks};save();render();};
+if(ST.sideCollapsed)document.getElementById('app').classList.add('side-collapsed');
 render();
 </script>
 </body>
